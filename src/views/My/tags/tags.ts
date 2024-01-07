@@ -1,0 +1,38 @@
+//供选择的用户标签
+const tags = [
+  { value: 'HTML', label: 'HTML' },
+  { value: 'CSS', label: 'CSS' },
+  { value: 'JS', label: 'JS' },
+  { value: '男', label: '男' },
+  { value: '女', label: '女' },
+  { value: '高一', label: '高一' },
+  { value: '高二', label: '高二' },
+  { value: '高三', label: '高三' },
+  { value: '大一', label: '大一' },
+  { value: '大二', label: '大二' },
+  { value: '大三', label: '大三' },
+  { value: 'Java', label: 'Java' },
+  { value: 'C', label: 'C' },
+  { value: 'C++', label: 'C++' },
+  { value: 'go', label: 'go' },
+  { value: 'C#', label: 'C#' },
+  { value: 'python', label: 'python' },
+  { value: 'php', label: 'php' },
+  { value: '网络安全', label: '网络安全' },
+  { value: '运维', label: '运维' },
+  { value: '架构师', label: '架构师' },
+  { value: '羽毛球', label: '羽毛球' },
+  { value: '乒乓球', label: '乒乓球' },
+  { value: '排球', label: '排球' },
+  { value: '网球', label: '网球' },
+  { value: '桌球', label: '桌球' },
+  { value: '滑雪', label: '滑雪' },
+  { value: '潜水', label: '潜水' },
+  { value: '篮球', label: '篮球' },
+  { value: '求职中', label: '求职中' },
+  { value: '学习中', label: '学习中' },
+  { value: '上班族', label: '上班族' },
+  { value: '找伙伴', label: '找伙伴' }
+]
+
+export default tags;
