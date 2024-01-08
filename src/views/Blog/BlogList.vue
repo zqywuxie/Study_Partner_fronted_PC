@@ -14,11 +14,13 @@
                   @change="doSearch"
               />
               <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
+              <el-button class="w-50 m-2" @click="createBlog">创建博客
+              </el-button>
             </div>
           </div>
           <div v-else></div>
         </el-header>
-        <el-main style="background-color: #f0f2f5">
+        <el-main>
           <el-empty v-if="blogList.length === 0" description="暂无博客"/>
           <el-row v-else :gutter="20" class="mb-4">
             <el-col
@@ -26,38 +28,25 @@
                 :key="blog.id"
                 :lg="4" :md="8" :sm="10" :xl="11" :xs="100"
             >
-              <el-card class="card" shadow="hover" @click="toUserInfo(blog.id)">
-                <div>
-                  <el-image :src="blog.images" fit="contain" style=" height: 140px"/>
+              <el-card class="blog-card" shadow="hover" @click="toUserInfo(blog.id)">
+                <div class="blog-card-cover">
+                  <el-image v-if="blog.images" :src="blog.images" fit="cover"
+                            style="height: 140px; border-radius: 8px"/>
                 </div>
-                <div style="padding: 1px">
-                  <span>{{ blog.username }}</span>
-                  <div>
-                    <el-tag class="ml-2" size="small">
-                      {{ blog.title }}
-                    </el-tag>
-                    <!--                    <el-tag v-if="!blog.tags || blog.tags?.length === 0" class="ml-2" size="small" type="info">-->
-                    <!--                      暂无标签-->
-                    <!--                    </el-tag>-->
-                  </div>
+                <div style="padding: 14px">
+                  <span>{{ blog.title }}</span>
                   <div class="bottom">
-                    <div class="profile">{{ blog.content ? blog.content.substring(-1, 9) : '该用户懒，没有简介' }}</div>
-                    <!--            <el-button class="button" type="primary" text>联系我</el-button>-->
+                    <el-avatar :src="blog.author?.avatarUrl">Operating</el-avatar>
+                    <el-tag>{{ blog.author?.username }}</el-tag>
+
                   </div>
                 </div>
-
-                <!-- todo 考虑一下是否可以在外面进行点赞和评论                点赞和评论-->
-                <el-icon color="#409EFC" class="no-inherit" style="width: 200px">
-                  <Star/>
-                </el-icon>
-                <el-icon color="#409EFC" class="no-inherit">
-                  <ChatLineRound/>
-                </el-icon>
-
               </el-card>
             </el-col>
           </el-row>
         </el-main>
+
+
         <div style="margin:0 auto; ">
           <el-pagination
               v-if="ModeType === 'default'"
@@ -82,8 +71,9 @@ import {listBlogPageUsingPOST, likeBlogUsingPUT} from "../../servers/api/blogCon
 
 import {useAppStoreWithOut} from "../../store/modules/app";
 import {useCache} from "../../hooks/web/useCache";
-import {Star, ChatLineRound} from '@element-plus/icons-vue';
+import {Star, ChatLineRound, Search} from '@element-plus/icons-vue';
 import {useRouter} from "vue-router";
+// import {} from "@element-plus/icons-vue/dist/types";
 // import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
 const router = useRouter();
@@ -169,6 +159,14 @@ const doSearch = async () => {
   }
 }
 
+//
+
+const createBlog = () => {
+  router.push({
+    path: "/blog/edit",
+  })
+}
+
 //心动匹配模式获取用户
 async function matchUser() {
   const res = await matchUsersUsingGET({
@@ -226,5 +224,13 @@ const toUserInfo = (id) => {
 .profile {
   font-size: 12px;
   color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

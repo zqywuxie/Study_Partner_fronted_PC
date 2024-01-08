@@ -20,4 +20,4 @@ VITE_SOURCEMAP = false
 VITE_OUT_DIR = dist-pro
 
 # 标题
-VITE_APP_TITLE = 找伙伴-找一个志同道合的朋友
+VITE_APP_TITLE = 志同道合-伙伴匹配系统

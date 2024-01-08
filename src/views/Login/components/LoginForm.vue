@@ -151,7 +151,7 @@ const signIn = async () => {
         const {wsCache} = useCache()
         wsCache.set(appStore.getUserInfo, res.data)
         // getRole()
-        await push('/')
+        await push('/index')
       }
     }
   })

@@ -25,7 +25,7 @@
           </div>
           <div v-else></div>
         </el-header>
-        <el-main style="background-color: #f0f2f5">
+        <el-main>
           <el-empty v-if="userList.length === 0" description="找不到符合要求的伙伴噢"/>
           <el-row v-else :gutter="20" class="mb-4">
             <el-col

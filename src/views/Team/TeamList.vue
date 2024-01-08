@@ -11,18 +11,18 @@
       </el-aside>
       <el-container>
         <el-header>
-          <div style="  display: flex;
-  justify-content: space-between;">
-            <el-input
-                v-model="searchText"
-                :prefix-icon="Search"
-                class="w-50 m-2"
-                placeholder="搜索你感兴趣的队伍吧！"
-                @change="doSearch"
-                style="width: 400px;"
-            />
-            <el-button class="w-50 m-2" @click="createTeam">创建队伍
-            </el-button>
+          <div style="display:inline-block; margin-right: 10px">
+            <div style="display: flex; align-items: center;">
+              <el-input
+                  v-model="searchText"
+                  :prefix-icon="Search"
+                  class="w-50 m-2"
+                  placeholder="搜索你感兴趣的队伍吧！"
+                  @change="doSearch"
+              />
+              <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
+              <el-button class="w-50 m-2" @click="createTeam">创建队伍</el-button>
+            </div>
           </div>
 
         </el-header>
@@ -78,7 +78,7 @@
     <el-dialog v-model="passwordDialog" title="加入队伍">
       <el-form :model="passwordForm">
         <el-form-item label="请输入密码：" label-width="140px">
-          <el-input v-model="passwordForm.password" autocomplete="off" type="password" show-password />
+          <el-input v-model="passwordForm.password" autocomplete="off" type="password" show-password/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -96,11 +96,11 @@
 <script lang="ts" setup>
 
 import {onMounted, ref} from "vue";
-import {joinTeamUsingPOST,searchAllUsingGET } from "@/servers/api/teamController";
+import {joinTeamUsingPOST, searchAllUsingGET} from "@/servers/api/teamController";
 import moment from "moment";
 import {Search} from '@element-plus/icons-vue';
 import {useRouter} from "vue-router";
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 const router = useRouter();
 const pageSize = ref(10);
@@ -110,7 +110,7 @@ const searchText = ref('');
 const passwordDialog = ref<boolean>(false);
 const teamList = ref<API.TeamUserVO[]>();
 const passwordForm = ref({
-  password:''
+  password: ''
 });
 const clickTeamId = ref();
 
@@ -157,22 +157,22 @@ const joinPassTeam = (teamId) => {
 }
 
 const joinPassTeamReq = async () => {
- const res = await joinTeamUsingPOST({
+  const res = await joinTeamUsingPOST({
     teamId: clickTeamId.value,
-    password:passwordForm.value.password
+    password: passwordForm.value.password
   })
-  if(res.data){
+  if (res.data) {
     ElMessage({
       message: '加入队伍成功',
       type: 'success'
     })
     passwordDialog.value = false;
     await getTeamList();
-  }else {
+  } else {
     ElMessage.error('请检查密码，或联系队长');
   }
 }
-const createTeam = ()=>{
+const createTeam = () => {
   router.push({
     path: '/team/create',
   })

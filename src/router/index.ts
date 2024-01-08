@@ -64,23 +64,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         ]
     },
     {
-        path: '/im',
-        component: Layout,
-        name: 'imRoot',
-        meta: {},
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/Im/Im.vue'),
-                name: 'im',
-                meta: {
-                    title: '聊天室',
-                    icon: 'material-symbols:chat'
-                }
-            }
-        ]
-    },
-    {
         path: '/blog',
         component: Layout,
         name: 'blog',
@@ -109,6 +92,23 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                 name: 'blogEdit',
                 meta: {
                     hidden: true
+                }
+            }
+        ]
+    },
+    {
+        path: '/im',
+        component: Layout,
+        name: 'imRoot',
+        meta: {},
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Im/im.vue'),
+                name: 'im',
+                meta: {
+                    title: '聊天室',
+                    icon: 'material-symbols:chat'
                 }
             }
         ]

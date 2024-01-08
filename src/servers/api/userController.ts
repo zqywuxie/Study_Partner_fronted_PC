@@ -37,13 +37,12 @@ export async function deleteUsingPOST1(body: API.User, options?: { [key: string]
 }
 
 /** 通过邮箱查询用户 GET /api/user/email */
-export async function getUserByEmailUsingGET(body: string, options?: { [key: string]: any }) {
-  return service('/api/user/email', {
+export async function getUserByEmailUsingGET(email: string, options?: { [key: string]: any }) {
+  return service(`/api/user/email?email=${email}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
     ...(options || {}),
   });
 }
