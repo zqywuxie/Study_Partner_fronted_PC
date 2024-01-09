@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 import { useDesign } from '@/hooks/web/useDesign'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 
-import { outLoginUsingPOST } from '@/servers/api/userController'
+import { outLoginUsingPost } from '@/servers/api/userController'
 import { useAppStore } from '@/store/modules/app'
 
 const tagsViewStore = useTagsViewStore()
@@ -32,7 +32,7 @@ const loginOut = () => {
     type: 'warning'
   })
     .then(async () => {
-      const res = await outLoginUsingPOST().catch(() => {})
+      const res = await outLoginUsingPost().catch(() => {})
       if (res) {
         wsCache.clear()
         tagsViewStore.delAllViews()
@@ -45,7 +45,7 @@ const loginOut = () => {
 
 const toUserCenter = () => {
   // window.open('https://element-plus-admin-doc.cn/')
-  router.push("/my/info")
+  router.push('/my/info')
 }
 </script>
 

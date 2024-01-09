@@ -29,10 +29,10 @@
             >{{ currentUser.useraccount }}
             </el-descriptions-item
             >
-<!--            <el-descriptions-item align="left" label="编号:" label-align="right"-->
-<!--            >{{ currentUser.planetCode }}-->
-<!--            </el-descriptions-item-->
-<!--            >-->
+            <!--            <el-descriptions-item align="left" label="编号:" label-align="right"-->
+            <!--            >{{ currentUser.planetCode }}-->
+            <!--            </el-descriptions-item-->
+            <!--            >-->
             <el-descriptions-item align="left" label="角色:" label-align="right">
               {{ currentUser.userRole === 1 ? '管理员' : '普通用户' }}
             </el-descriptions-item>
@@ -75,7 +75,7 @@
             >{{ currentUser.phone }}
             </el-descriptions-item
             >
-            <el-descriptions-item align="left" label="联系方式:" label-align="right"
+            <el-descriptions-item align="left" label="邮箱:" label-align="right"
             >{{ currentUser.contactInfo }}
             </el-descriptions-item
             >
@@ -125,8 +125,8 @@
 import moment from "moment";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import {searchUserByIdUsingGET} from "../../servers/api/userController"
-import {searchTeamByIDUsingGET} from "../../servers/api/teamController"
+import {searchUserByIdUsingGet} from "../../servers/api/userController"
+import {getMyTeamsUsingGet} from "../../servers/api/teamController"
 
 const route = useRoute();
 const router = useRouter();
@@ -135,7 +135,7 @@ const currentUser = ref({});
 const joinTeam = ref([]);
 
 onMounted(async () => {
-  const res = await searchUserByIdUsingGET({
+  const res = await searchUserByIdUsingGet({
     id: userId
   });
   console.log(res)
@@ -146,9 +146,7 @@ onMounted(async () => {
   // console.log(res.data[0]);
   const userIdNum = Number(userId)
   //  todo 查找用户加入的队伍
-  const resTeam = await getTeamListByUserIdUsingGET({
-    userId: userIdNum
-  })
+  const resTeam = await getMyTeamsUsingGet({})
   console.log(resTeam)
   joinTeam.value = resTeam.data
 })
@@ -167,7 +165,7 @@ const clickTeam = (teamId) => {
 <style scoped>
 .profile {
   padding-top: 10px;
-  color: rgba(0, 0, 0, .45);
-  font-size: 13px
+  color: rgb(229, 231, 235);
+  font-size: 15px
 }
 </style>

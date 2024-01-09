@@ -69,21 +69,21 @@
 import {Plus} from '@element-plus/icons-vue'
 import {ElMessage, UploadProps} from "element-plus";
 import {useRoute, useRouter} from "vue-router";
-import {addUsingPOST, searchTeamByIDUsingGET, updateUsingPOST} from "@/servers/api/teamController";
-import {currentUserUsingGET} from '@/servers/api/userController'
+import {addUsingPost, searchTeamByIdUsingGet, updateUsingPost} from "@/servers/api/teamController";
+import {currentUserUsingGet} from '@/servers/api/userController'
 import {onMounted, ref} from "vue";
 
 const router = useRouter();
 const route = useRoute();
 const teamId = route.query.teamId;
 const teamInfo = ref<API.Team>({});
-const oldMaxNum = ref();
+const oldMaxNum = ref(3);
 const typeText = ref('创建队伍');
 const userInfo = ref()
 import {PATH_URL} from "@/config/axios";
 
 async function getTeamById() {
-  const res = await searchTeamByIDUsingGET({
+  const res = await searchTeamByIdUsingGet({
     id: teamId
   })
   console.log(res);
@@ -93,7 +93,7 @@ async function getTeamById() {
 }
 
 onMounted(async () => {
-  userInfo.value = await currentUserUsingGET()
+  userInfo.value = await currentUserUsingGet()
   console.log(userInfo)
   if (teamId) {
     await getTeamById();
@@ -101,7 +101,7 @@ onMounted(async () => {
 })
 
 async function updateTeam() {
-  const res = await updateUsingPOST({
+  const res = await updateUsingPost({
     avatarUrl: teamInfo.value.avatarUrl,
     description: teamInfo.value.description,
     // 队伍公告
@@ -127,7 +127,7 @@ async function updateTeam() {
 }
 
 async function createTeam() {
-  const res = await addUsingPOST({
+  const res = await addUsingPost({
     avatarUrl: teamInfo.value.avatarUrl,
     description: teamInfo.value.description,
     // announce: teamInfo.value.announce,

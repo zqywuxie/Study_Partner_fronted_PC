@@ -1,11 +1,11 @@
 // @ts-ignore
 /* eslint-disable */
-import { request } from 'umi';
+import { service } from '@/config/axios'
 
 /** 点赞数 GET /api/like/count */
-export async function getCaptchaUsingGET(options?: { [key: string]: any }) {
+export async function getCaptchaUsingGet(options?: { [key: string]: any }) {
   return request<API.CommonResultInt_>('/api/like/count', {
     method: 'GET',
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }

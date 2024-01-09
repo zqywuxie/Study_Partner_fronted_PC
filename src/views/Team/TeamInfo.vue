@@ -135,7 +135,7 @@ import moment from "moment";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 
-import {searchTeamByIDUsingGET, joinTeamUsingPOST, quitTeamUsingPOST} from "@/servers/api/teamController";
+import {searchTeamByIdUsingGet, joinTeamUsingPost, quitTeamUsingPost} from "@/servers/api/teamController";
 
 import {useAppStoreWithOut} from "@/store/modules/app";
 import {useCache} from "@/hooks/web/useCache";
@@ -157,7 +157,7 @@ if (currentUser.value.tags) {
 
 async function getTeamById() {
   console.log(teamId)
-  const res = await searchTeamByIDUsingGET({
+  const res = await searchTeamByIdUsingGet({
     id: teamId
   })
   console.log(res)
@@ -182,7 +182,7 @@ const toEditTeam = () => {
   });
 }
 const quitTeam = async () => {
-  const res = await quitTeamUsingPOST({
+  const res = await quitTeamUsingPost({
     teamId: teamInfo.value.id
   })
   if (res.data) {
@@ -199,7 +199,7 @@ const quitTeam = async () => {
 }
 
 const joinTeam = async () => {
-  const res = await joinTeamUsingPOST({
+  const res = await joinTeamUsingPost({
     teamId: teamInfo.value.id,
   })
   if (res.data) {

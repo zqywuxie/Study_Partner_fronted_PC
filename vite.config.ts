@@ -124,9 +124,7 @@ export default ({command, mode}: ConfigEnv): UserConfig => {
                     rewrite: path => path.replace(/^\/api/, '')
                 }
             },
-            hmr: {
-                overlay: false
-            },
+            hmr: true,
             host: '0.0.0.0'
         },
         optimizeDeps: {

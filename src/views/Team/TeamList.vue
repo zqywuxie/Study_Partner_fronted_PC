@@ -51,7 +51,7 @@
                   border
                   direction="vertical"
               >
-                <el-descriptions-item label="队长">{{ team.manageUserList[0].username }}</el-descriptions-item>
+                <!--                <el-descriptions-item label="队长">{{ team.manageUserList[0].username }}</el-descriptions-item>-->
                 <el-descriptions-item label="创建时间">{{ moment(team.createTime).format('lll') }}
                 </el-descriptions-item>
                 <el-descriptions-item :span="2" label="截止时间">
@@ -96,7 +96,7 @@
 <script lang="ts" setup>
 
 import {onMounted, ref} from "vue";
-import {joinTeamUsingPOST, searchAllUsingGET} from "@/servers/api/teamController";
+import {joinTeamUsingPost, searchAllByPageUsingGet} from "@/servers/api/teamController";
 import moment from "moment";
 import {Search} from '@element-plus/icons-vue';
 import {useRouter} from "vue-router";
@@ -115,14 +115,13 @@ const passwordForm = ref({
 const clickTeamId = ref();
 
 async function getTeamList() {
-  const res = await searchAllUsingGET({
-    // pageSize: pageSize.value,
-    // pageNum: pageNum.value,
+  const res = await searchAllByPageUsingGet({
+    pageSize: pageSize.value,
+    pageNum: pageNum.value,
     status: status.value,
     searchText: searchText.value
   })
-  console.log(res)
-  teamList.value = res.data;
+  teamList.value = res.data.records;
 }
 
 onMounted(async () => {
@@ -157,7 +156,7 @@ const joinPassTeam = (teamId) => {
 }
 
 const joinPassTeamReq = async () => {
-  const res = await joinTeamUsingPOST({
+  const res = await joinTeamUsingPost({
     teamId: clickTeamId.value,
     password: passwordForm.value.password
   })

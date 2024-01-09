@@ -1,149 +1,143 @@
 // @ts-ignore
 /* eslint-disable */
-import {service} from "@/config/axios";
+
+import { service } from '@/config/axios'
 /** add POST /api/team/add */
-export async function addUsingPOST(body: API.TeamAddRequest, options?: { [key: string]: any }) {
+export async function addUsingPost(body: API.TeamAddRequest, options?: { [key: string]: any }) {
   return service('/api/team/add', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** delete POST /api/team/delete */
-export async function deleteUsingPOST(
+export async function deleteUsingPost(
   body: API.TeamDeleteRequest,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/delete', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** searchTeamByID GET /api/team/get */
-export async function searchTeamByIDUsingGET(
+export async function searchTeamByIdUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.searchTeamByIDUsingGETParams,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/get', {
     method: 'GET',
     params: {
-      ...params,
+      ...params
     },
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** joinTeam POST /api/team/join */
-export async function joinTeamUsingPOST(
+export async function joinTeamUsingPost(
   body: API.TeamJoinRequest,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/join', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
-  });
-}
-
-/** searchAll GET /api/team/list */
-export async function searchAllUsingGET(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.searchAllUsingGETParams,
-  options?: { [key: string]: any },
-) {
-  return service('/api/team/list', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** searchAllByPage GET /api/team/list/page */
-export async function searchAllByPageUsingGET(
+export async function searchAllByPageUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.searchAllByPageUsingGETParams,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/list/page', {
     method: 'GET',
     params: {
-      ...params,
+      ...params
     },
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** myCreateTeams GET /api/team/my/create */
-export async function myCreateTeamsUsingGET(
+export async function myCreateTeamsUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.myCreateTeamsUsingGETParams,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/my/create', {
     method: 'GET',
     params: {
-      ...params,
+      ...params
     },
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** myJoinTeams GET /api/team/my/join */
-export async function myJoinTeamsUsingGET(
+export async function myJoinTeamsUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.myJoinTeamsUsingGETParams,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/my/join', {
     method: 'GET',
     params: {
-      ...params,
+      ...params
     },
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
+}
+
+/** getMyTeams GET /api/team/myTeam */
+export async function getMyTeamsUsingGet(options?: { [key: string]: any }) {
+  return service('/api/team/myTeam', {
+    method: 'GET',
+    ...(options || {})
+  })
 }
 
 /** quitTeam POST /api/team/quit */
-export async function quitTeamUsingPOST(
+export async function quitTeamUsingPost(
   body: API.TeamQuitRequest,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/quit', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }
 
 /** update POST /api/team/update */
-export async function updateUsingPOST(
+export async function updateUsingPost(
   body: API.TeamUpdateRequest,
-  options?: { [key: string]: any },
+  options?: { [key: string]: any }
 ) {
   return service('/api/team/update', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: body,
-    ...(options || {}),
-  });
+    ...(options || {})
+  })
 }

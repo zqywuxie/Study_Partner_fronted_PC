@@ -1,55 +1,63 @@
 <template>
   <div>
     <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
-      <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
+      <el-avatar class="header-img" :size="40" :src="currentUser?.avatarUrl"></el-avatar>
       <div class="reply-info">
         <div
-
-            tabindex="0"
-            contenteditable="true"
-            id="replyInput"
-            spellcheck="false"
-            placeholder="输入评论..."
-            class="reply-input"
-            @focus="showReplyBtn"
-            @input="onDivInput($event)"
+          tabindex="0"
+          contenteditable="true"
+          id="replyInput"
+          spellcheck="false"
+          placeholder="输入评论..."
+          class="reply-input"
+          @focus="showReplyBtn"
+          @input="onDivInput($event)"
         >
         </div>
       </div>
       <div class="reply-btn-box" v-show="btnShow">
-        <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">发表评论</el-button>
+        <el-button class="reply-btn" size="medium" @click="sendComment" type="primary"
+          >发表评论</el-button
+        >
       </div>
     </div>
-    <div v-for="(item,i) in comments" :key="i" class="author-title reply-father">
-      <el-avatar class="header-img" :size="40" :src="item.headImg"></el-avatar>
+
+    <div v-for="(item, i) in $props.commentList" :key="i" class="author-title reply-father">
+      <el-avatar class="header-img" :size="40" :src="item.commentUser.avatarUrl"></el-avatar>
       <div class="author-info">
-        <span class="author-name">{{ item.name }}</span>
-        <span class="author-time">{{ item.time }}</span>
+        <span class="author-name">{{ item.commentUser.username }}</span>
+        <span class="author-time">
+          {{ item.createTime }}
+        </span>
       </div>
       <div class="icon-btn">
-                <span @click="showReplyInput(i,item.name,item.id)">
-             <el-icon><ChatLineSquare/></el-icon>
-                  {{ item.commentNum }}</span>
+        <span @click="showReplyInput(i, item.name, item.id)">
+          <el-icon><ChatLineSquare /></el-icon>
+          {{ item.commentNum }}</span
+        >
         <el-icon>
-          <Star/>
+          <Star />
         </el-icon>
-        {{ item.like }}
+        {{ item.likedNum }}
       </div>
       <div class="talk-box">
         <p>
           <span class="reply">{{ item.comment }}</span>
         </p>
       </div>
+
+      <!--      回复-->
       <div class="reply-box">
-        <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
+        <div v-for="(reply, j) in item.reply" :key="j" class="author-title">
           <el-avatar class="header-img" :size="40" :src="reply.fromHeadImg"></el-avatar>
           <div class="author-info">
             <span class="author-name">{{ reply.from }}</span>
             <span class="author-time">{{ reply.time }}</span>
           </div>
           <div class="icon-btn">
-            <span @click="showReplyInput(i,reply.from,reply.id)"><i
-                class="iconfont el-icon-s-comment"></i>{{ reply.commentNum }}</span>
+            <span @click="showReplyInput(i, reply.from, reply.id)"
+              ><i class="iconfont el-icon-s-comment"></i>{{ reply.commentNum }}</span
+            >
             <i class="iconfont el-icon-caret-top"></i>{{ reply.like }}
           </div>
           <div class="talk-box">
@@ -58,19 +66,24 @@
               <span class="reply">{{ reply.comment }}</span>
             </p>
           </div>
-          <div class="reply-box">
-
-          </div>
+          <div class="reply-box"> </div>
         </div>
       </div>
       <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
         <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
         <div class="reply-info">
-          <div tabindex="0" contenteditable="true" spellcheck="false" placeholder="输入评论..."
-               @input="onDivInput($event)" class="reply-input reply-comment-input"></div>
+          <div
+            tabindex="0"
+            contenteditable="true"
+            spellcheck="false"
+            placeholder="输入评论..."
+            @input="onDivInput($event)"
+            class="reply-input reply-comment-input"
+          ></div>
         </div>
-        <div class=" reply-btn-box">
-          <el-button class="reply-btn" size="medium" @click="sendCommentReply(i,j)" type="primary">发表评论
+        <div class="reply-btn-box">
+          <el-button class="reply-btn" size="medium" @click="sendCommentReply(i, j)" type="primary"
+            >发表评论
           </el-button>
         </div>
       </div>
@@ -80,7 +93,8 @@
 
 <!--https://blog.csdn.net/zLanaDelRey/article/details/100997792-->
 <script>
-import {ChatLineSquare, Search, Star} from "@element-plus/icons-vue";
+import { ChatLineSquare, Search, Star } from '@element-plus/icons-vue'
+import { currentUserUsingGET } from '@/servers/api/userController'
 
 const clickoutside = {
   // 初始化指令
@@ -88,34 +102,41 @@ const clickoutside = {
     function documentHandler(e) {
       // 这里判断点击的元素是否是本身，是本身，则返回
       if (el.contains(e.target)) {
-        return false;
+        return false
       }
       // 只有不是本身 才会响应事件
       // 判断指令中是否绑定了函数
       if (binding.expression) {
         // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-        binding.value(e);
+        binding.value(e)
       }
     }
 
     // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-    el.vueClickOutside = documentHandler;
-    document.addEventListener('click', documentHandler);
+    el.vueClickOutside = documentHandler
+    document.addEventListener('click', documentHandler)
   },
   // update() {
   // },
   // vue 弹出框 下面 响应
   unbind(el, binding) {
     // 解除事件监听
-    document.removeEventListener('click', el.vueClickOutside);
-    delete el.vueClickOutside;
-  },
-};
+    document.removeEventListener('click', el.vueClickOutside)
+    delete el.vueClickOutside
+  }
+}
 export default {
   name: 'ArticleComment',
-  components: {ChatLineSquare, Star, Search},
+  components: { ChatLineSquare, Star, Search },
+  props: {
+    commentList: {
+      type: [],
+      required: true
+    }
+  },
   data() {
     return {
+      currentUser: null,
       btnShow: false,
       index: '0',
       replyComment: '',
@@ -158,7 +179,6 @@ export default {
               commentNum: 0,
               like: 5,
               inputShow: false
-
             }
           ]
         },
@@ -183,7 +203,6 @@ export default {
               commentNum: 25,
               like: 5,
               inputShow: false
-
             }
           ]
         },
@@ -197,19 +216,31 @@ export default {
           like: 5,
           inputShow: false,
           reply: []
-        },
+        }
       ]
     }
   },
-  directives: {clickoutside},
+  directives: { clickoutside },
+
   methods: {
-    messageTitleClick(num) { // 点击了具体某条消息
-      console.log("点击了消息", num);
+    async fetchData() {
+      try {
+        let data = await currentUserUsingGET().then((res) => {
+          return res.data
+        })
+        return data
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    },
+    messageTitleClick(num) {
+      // 点击了具体某条消息
+      console.log('点击了消息', num)
     },
     inputFocus() {
-      var replyInput = document.getElementById('replyInput');
-      replyInput.style.padding = "8px 8px"
-      replyInput.style.border = "2px solid blue"
+      var replyInput = document.getElementById('replyInput')
+      replyInput.style.padding = '8px 8px'
+      replyInput.style.border = '2px solid blue'
       replyInput.focus()
     },
     showReplyBtn() {
@@ -218,18 +249,19 @@ export default {
     hideReplyBtn() {
       let replyInput = document.getElementById('replyInput')
       this.btnShow = false
-      replyInput.style.padding = "10px"
-      replyInput.style.border = "none"
+      replyInput.style.padding = '10px'
+      replyInput.style.border = 'none'
     },
     showReplyInput(i, name, id) {
-      this.comments[this.index].inputShow = false
+      // todo inputshow
+      // this.comments[this.index].inputShow = false
       this.index = i
-      this.comments[i].inputShow = true
+      // this.comments[i].inputShow = true
       this.to = name
       this.toId = id
     },
     _inputShow(i) {
-      return this.comments[i].inputShow
+      // return this.comments[i].inputShow
     },
     sendComment() {
       if (!this.replyComment) {
@@ -241,8 +273,8 @@ export default {
       } else {
         let a = {}
         let input = document.getElementById('replyInput')
-        let timeNow = new Date().getTime();
-        let time = this.dateStr(timeNow);
+        let timeNow = new Date().getTime()
+        let time = this.dateStr(timeNow)
         a.name = this.myName
         a.comment = this.replyComment
         a.headImg = this.myHeader
@@ -251,8 +283,7 @@ export default {
         a.like = 0
         this.comments.push(a)
         this.replyComment = ''
-        input.innerHTML = '';
-
+        input.innerHTML = ''
       }
     },
     sendCommentReply(i, j) {
@@ -264,8 +295,8 @@ export default {
         })
       } else {
         let a = {}
-        let timeNow = new Date().getTime();
-        let time = this.dateStr(timeNow);
+        let timeNow = new Date().getTime()
+        let time = this.dateStr(timeNow)
         a.from = this.myName
         a.to = this.to
         a.fromHeadImg = this.myHeader
@@ -275,44 +306,47 @@ export default {
         a.like = 0
         this.comments[i].reply.push(a)
         this.replyComment = ''
-        document.getElementsByClassName("reply-comment-input")[i].innerHTML = ""
+        document.getElementsByClassName('reply-comment-input')[i].innerHTML = ''
       }
     },
     onDivInput: function (e) {
-      this.replyComment = e.target.innerHTML;
+      this.replyComment = e.target.innerHTML
     },
     dateStr(date) {
       //获取js 时间戳
-      var time = new Date().getTime();
+      var time = new Date().getTime()
       //去掉 js 时间戳后三位，与php 时间戳保持一致
-      time = parseInt((time - date) / 1000);
+      time = parseInt((time - date) / 1000)
       //存储转换值
-      var s;
-      if (time < 60 * 10) {//十分钟内
-        return '刚刚';
-      } else if ((time < 60 * 60) && (time >= 60 * 10)) {
+      var s
+      if (time < 60 * 10) {
+        //十分钟内
+        return '刚刚'
+      } else if (time < 60 * 60 && time >= 60 * 10) {
         //超过十分钟少于1小时
-        s = Math.floor(time / 60);
-        return s + "分钟前";
-      } else if ((time < 60 * 60 * 24) && (time >= 60 * 60)) {
+        s = Math.floor(time / 60)
+        return s + '分钟前'
+      } else if (time < 60 * 60 * 24 && time >= 60 * 60) {
         //超过1小时少于24小时
-        s = Math.floor(time / 60 / 60);
-        return s + "小时前";
-      } else if ((time < 60 * 60 * 24 * 30) && (time >= 60 * 60 * 24)) {
+        s = Math.floor(time / 60 / 60)
+        return s + '小时前'
+      } else if (time < 60 * 60 * 24 * 30 && time >= 60 * 60 * 24) {
         //超过1天少于30天内
-        s = Math.floor(time / 60 / 60 / 24);
-        return s + "天前";
+        s = Math.floor(time / 60 / 60 / 24)
+        return s + '天前'
       } else {
         //超过30天ddd
         // var date = new Date(parseInt(date));
-        date = new Date(parseInt(date));
-        return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+        date = new Date(parseInt(date))
+        return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
       }
     }
   },
+  async mounted() {
+    this.currentUser = await this.fetchData()
+  }
 }
 </script>
-
 
 <style scoped lang="css">
 .my-reply {
@@ -327,8 +361,8 @@ export default {
 
 .my-reply .reply-info {
   display: inline-block;
-  margin-left: 5px;
   width: 90%;
+  margin-left: 5px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -339,8 +373,8 @@ export default {
 
 .my-reply .reply-info .reply-input {
   min-height: 20px;
-  line-height: 22px;
   padding: 10px 10px;
+  line-height: 22px;
   //color: #ccc;
   //background-color: #fff;
   border-radius: 5px;
@@ -357,8 +391,8 @@ export default {
 .my-reply .reply-info .reply-input:focus {
   padding: 8px 8px;
   border: 2px solid #ec0f0f;
-  box-shadow: none;
   outline: none;
+  box-shadow: none;
 }
 
 .my-reply .reply-btn-box {
@@ -396,24 +430,24 @@ export default {
 
 .author-title .author-info {
   display: inline-block;
-  margin-left: 5px;
   width: 60%;
   height: 40px;
+  margin-left: 5px;
   line-height: 20px;
 }
 
 .author-title .author-info > span {
   display: block;
-  cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .author-title .author-info .author-name {
   color: #e8171e;
-  font-size: 18px;
   font-weight: bold;
+  font-size: 18px;
 }
 
 .author-title .author-info .author-time {
@@ -421,9 +455,9 @@ export default {
 }
 
 .author-title .icon-btn {
+  float: right;
   width: 30%;
   padding: 0 !important;
-  float: right;
 }
 
 @media screen and (max-width: 1200px) {
@@ -451,13 +485,12 @@ export default {
 }
 
 .author-title .talk-box .reply {
-  font-size: 16px;
   color: #0000ff;
+  font-size: 16px;
 }
 
 .author-title .reply-box {
   margin: 10px 0 0 50px;
   //background-color: #efefef;
 }
-
 </style>

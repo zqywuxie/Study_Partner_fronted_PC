@@ -1,48 +1,55 @@
 <script lang="ts" setup>
-import {reactive, ref, unref} from 'vue'
-import {Form} from '@/components/Form'
-import {useI18n} from '@/hooks/web/useI18n'
-import {ElButton, ElLink, ElMessage, FormRules} from 'element-plus'
-import {required} from '@/utils/formRules'
-import {useForm} from '@/hooks/web/useForm'
-import {useAppStore} from '@/store/modules/app'
-import {usePermissionStore} from '@/store/modules/permission'
-import {useRoute, useRouter} from 'vue-router'
-import {getUserByEmailUsingGET, registerUsingPOST} from '@/servers/api/userController'
-import {getCaptchaUsingGET1} from '@/servers/api/mailController'
-import UserLoginRequest = API.UserLoginRequest;
+import { reactive, ref, unref } from 'vue'
+import { Form } from '@/components/Form'
+import { useI18n } from '@/hooks/web/useI18n'
+import { ElButton, ElLink, ElMessage, FormRules } from 'element-plus'
+import { required } from '@/utils/formRules'
+import { useForm } from '@/hooks/web/useForm'
+import { useAppStore } from '@/store/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
+import { useRoute, useRouter } from 'vue-router'
+import { getUserByEmailUsingGet, registerUsingPost } from '@/servers/api/userController'
+import { getCaptchaUsingGet1 } from '@/servers/api/mailController'
+import UserLoginRequest = API.UserLoginRequest
 
 const appStore = useAppStore()
 
 const permissionStore = usePermissionStore()
 
-const {currentRoute, addRoute, push} = useRouter()
+const { currentRoute, addRoute, push } = useRouter()
 
-const {t} = useI18n()
-
+const { t } = useI18n()
 
 // todo 校验逻辑需要修改
 const rules: FormRules = {
   avatarUrl: [required],
-  useraccount: [{required: true, message: '请输入用户账号', trigger: 'blur'}, {
-    min: 6,
-    max: 8,
-    message: '用户账号在6到8位'
-  }],
-  password: [{required: true, message: '请输入密码', trigger: 'blur'}, {
-    min: 6,
-    max: 8,
-    message: '密码在6到8位'
-  }],
-  checkPassword: [{required: true, message: '请输入用户名', trigger: 'blur'}, {
-    min: 6,
-    max: 8,
-    message: '用户账号在6到8位'
-  }],
-  email: [{required: true, message: '请输入邮箱', trigger: 'blur'},],
+  useraccount: [
+    { required: true, message: '请输入用户账号', trigger: 'blur' },
+    {
+      min: 6,
+      max: 8,
+      message: '用户账号在6到8位'
+    }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    {
+      min: 6,
+      max: 8,
+      message: '密码在6到8位'
+    }
+  ],
+  checkPassword: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    {
+      min: 6,
+      max: 8,
+      message: '用户账号在6到8位'
+    }
+  ],
+  email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
   captcha: [required]
 }
-
 
 const schema = reactive<FormSchema[]>([
   {
@@ -90,7 +97,7 @@ const schema = reactive<FormSchema[]>([
       style: {
         width: '100%'
       },
-      placeholder: '确认密码',
+      placeholder: '确认密码'
     }
   },
   {
@@ -102,8 +109,8 @@ const schema = reactive<FormSchema[]>([
       span: 24
     },
     componentProps: {
-      placeholder: '输入你的邮箱',
-    },
+      placeholder: '输入你的邮箱'
+    }
   },
   {
     field: 'captcha',
@@ -114,8 +121,8 @@ const schema = reactive<FormSchema[]>([
       span: 14
     },
     componentProps: {
-      placeholder: '输入你的验证码',
-    },
+      placeholder: '输入你的验证码'
+    }
   },
   {
     field: 'tool',
@@ -134,16 +141,15 @@ const schema = reactive<FormSchema[]>([
     colProps: {
       span: 24
     }
-  },
+  }
 ])
 
-
-const {register, elFormRef, methods} = useForm()
+const { register, elFormRef, methods } = useForm()
 
 const loading = ref(false)
 
 const redirect = ref<string>('')
-const route = useRoute();
+const route = useRoute()
 // watch(
 //   () => currentRoute.value,
 //   (route: RouteLocationNormalizedLoaded) => {
@@ -160,20 +166,19 @@ const userRegister = async () => {
   await formRef?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
-      const {getFormData} = methods
+      const { getFormData } = methods
       const formData = await getFormData<UserLoginRequest>()
 
-      const res = await registerUsingPOST(formData)
-          .catch(() => {
-          })
-          .finally(() => (loading.value = false))
+      const res = await registerUsingPost(formData)
+        .catch(() => {})
+        .finally(() => (loading.value = false))
       console.log(res)
       if (res) {
         // getRole()
         ElMessage({
           message: '注册成功',
           grouping: true,
-          type: 'success',
+          type: 'success'
         })
         changeType()
       }
@@ -182,19 +187,18 @@ const userRegister = async () => {
 }
 
 const props = defineProps({
-  formType: {type: Number, required: true}
+  formType: { type: Number, required: true }
 })
 const emit = defineEmits(['update:formType'])
 const changeType = () => {
   emit('update:formType', 0)
 }
 
-
 const isClick = ref(true)
-const checkCaptcha = ref("");
-const time = ref("获取验证码")
+const checkCaptcha = ref('')
+const time = ref('获取验证码')
 const sendCaptcha = async () => {
-  const {getFormData} = methods
+  const { getFormData } = methods
   const formData = await getFormData<UserLoginRequest>()
   let email = formData.email
   console.log(email)
@@ -202,18 +206,18 @@ const sendCaptcha = async () => {
     const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
     if (isClick) {
       if (regEmail.test(email)) {
-        let res = getUserByEmailUsingGET(email);
+        let res = getUserByEmailUsingGet(email)
         if (res.code !== 0) {
           ElMessage.error('该邮箱已被使用')
         } else {
-          const res = getCaptchaUsingGET1(email)  // 获取验证码接口
+          const res = getCaptchaUsingGet1(email) // 获取验证码接口
           if (res.code !== 0) {
             ElMessage.error(res.description)
           } else {
             // registerUser.value.captcha = res.data
             ElMessage({
               message: '验证码发送成功，请注意查收',
-              type: 'success',
+              type: 'success'
             })
             isClick.value = false
             let s = 60
@@ -234,11 +238,9 @@ const sendCaptcha = async () => {
   } else {
     ElMessage({
       message: '请输入正确的邮箱',
-      type: 'warning',
+      type: 'warning'
     })
   }
-
-
 }
 
 // 获取角色信息
@@ -271,22 +273,18 @@ const sendCaptcha = async () => {
 //   }
 // }
 
-
 // todo 头像
 
-import {ref} from 'vue'
-import {ElMessage} from 'element-plus'
-import {Plus} from '@element-plus/icons-vue'
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
 
-import type {UploadProps} from 'element-plus'
-import {PATH_URL} from "@/config/axios";
+import type { UploadProps } from 'element-plus'
+import { PATH_URL } from '@/config/axios'
 
 const avatarUrl = ref('')
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-    response,
-    uploadFile
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   avatarUrl.value = URL.createObjectURL(uploadFile.raw!)
 }
 
@@ -304,31 +302,30 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
 <template>
   <Form
-      :rules="rules"
-      :schema="schema"
-      hide-required-asterisk
-      label-position="left"
-      size="large"
-      @register="register"
+    :rules="rules"
+    :schema="schema"
+    hide-required-asterisk
+    label-position="left"
+    size="large"
+    @register="register"
   >
     <template #title>
       <div class="container">
         <h2 class="text-2xl font-bold text-center w-[100%]">注册</h2>
         <el-upload
-            class="avatar-uploader"
-            :action="PATH_URL+'/api/fileOss/upload'"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+          class="avatar-uploader"
+          :action="PATH_URL + '/api/fileOss/upload'"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
         >
-          <img v-if="avatarUrl" :src="avatarUrl" class="avatar"/>
+          <img v-if="avatarUrl" :src="avatarUrl" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
-            <Plus/>
+            <Plus />
           </el-icon>
         </el-upload>
       </div>
     </template>
-
 
     <template #tool>
       <ElButton :loading="loading" class="w-[30%]" type="primary" @click="sendCaptcha">
@@ -339,7 +336,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
       </div>
     </template>
 
-
     <template #register>
       <ElButton :loading="loading" class="w-[100%]" type="primary" @click="userRegister">
         注册
@@ -349,11 +345,10 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 </template>
 
 <style lang="less" scoped>
-
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 :deep(.anticon) {
@@ -362,22 +357,21 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
 }
 
-
 //todo 头像样式
 .avatar-uploader .avatar {
+  display: block;
   width: 130px;
   height: 100px;
-  display: block;
 }
 </style>
 
 <style>
 .avatar-uploader .el-upload {
+  position: relative;
+  overflow: hidden;
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
   transition: var(--el-transition-duration-fast);
 }
 
@@ -386,11 +380,11 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 .el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
+  align-items: center;
   width: 100px;
   height: 100px;
+  color: #8c939d;
+  font-size: 28px;
   text-align: center;
-  align-items: center;
 }
 </style>
