@@ -21,7 +21,7 @@
                   @change="doSearch"
               />
               <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
-              <el-button class="w-50 m-2" @click="createTeam">创建队伍</el-button>
+              <el-button type="primary" :icon="Edit" @click="createTeam">创建队伍</el-button>
             </div>
           </div>
 
@@ -98,7 +98,7 @@
 import {onMounted, ref} from "vue";
 import {joinTeamUsingPost, searchAllByPageUsingGet} from "@/servers/api/teamController";
 import moment from "moment";
-import {Search} from '@element-plus/icons-vue';
+import {Edit, Search} from '@element-plus/icons-vue';
 import {useRouter} from "vue-router";
 import {ElMessage} from 'element-plus'
 

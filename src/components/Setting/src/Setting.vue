@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { ElDrawer, ElDivider, ElButton, ElMessage } from 'element-plus'
-import { ref, unref, computed, watch } from 'vue'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
-import { colorIsDark, lighten, hexToRGB } from '@/utils/color'
-import { useCssVar } from '@vueuse/core'
-import { useAppStore } from '@/store/modules/app'
-import { trim, setCssVar } from '@/utils'
+import {ElDrawer, ElDivider, ElButton, ElMessage} from 'element-plus'
+import {ref, unref, computed, watch} from 'vue'
+import {useI18n} from '@/hooks/web/useI18n'
+import {ThemeSwitch} from '@/components/ThemeSwitch'
+import {colorIsDark, lighten, hexToRGB} from '@/utils/color'
+import {useCssVar} from '@vueuse/core'
+import {useAppStore} from '@/store/modules/app'
+import {trim, setCssVar} from '@/utils'
 import ColorRadioPicker from './components/ColorRadioPicker.vue'
 import InterfaceDisplay from './components/InterfaceDisplay.vue'
 import LayoutRadioPicker from './components/LayoutRadioPicker.vue'
-import { useCache } from '@/hooks/web/useCache'
-import { useClipboard } from '@vueuse/core'
-import { useDesign } from '@/hooks/web/useDesign'
+import {useCache} from '@/hooks/web/useCache'
+import {useClipboard} from '@vueuse/core'
+import {useDesign} from '@/hooks/web/useDesign'
 
-const { getPrefixCls } = useDesign()
+const {getPrefixCls} = useDesign()
 
 const prefixCls = getPrefixCls('setting')
 
 const appStore = useAppStore()
 
-const { t } = useI18n()
+const {t} = useI18n()
 
 const layout = computed(() => appStore.getLayout)
 
@@ -31,7 +31,7 @@ const systemTheme = ref(appStore.getTheme.elColorPrimary)
 
 const setSystemTheme = (color: string) => {
   setCssVar('--el-color-primary', color)
-  appStore.setTheme({ elColorPrimary: color })
+  appStore.setTheme({elColorPrimary: color})
   const leftMenuBgColor = useCssVar('--left-menu-bg-color', document.documentElement)
   setMenuTheme(trim(unref(leftMenuBgColor)))
 }
@@ -74,12 +74,12 @@ const setMenuTheme = (color: string) => {
     leftMenuBgLightColor: isDarkColor ? lighten(color!, 6) : color,
     // 左侧菜单选中背景颜色
     leftMenuBgActiveColor: isDarkColor
-      ? 'var(--el-color-primary)'
-      : hexToRGB(unref(primaryColor), 0.1),
+        ? 'var(--el-color-primary)'
+        : hexToRGB(unref(primaryColor), 0.1),
     // 左侧菜单收起选中背景颜色
     leftMenuCollapseBgActiveColor: isDarkColor
-      ? 'var(--el-color-primary)'
-      : hexToRGB(unref(primaryColor), 0.1),
+        ? 'var(--el-color-primary)'
+        : hexToRGB(unref(primaryColor), 0.1),
     // 左侧菜单字体颜色
     leftMenuTextColor: '#333',
     // 左侧菜单选中字体颜色
@@ -95,20 +95,20 @@ const setMenuTheme = (color: string) => {
 
 // 监听layout变化，重置一些主题色
 watch(
-  () => layout.value,
-  (n) => {
-    if (n === 'top' && !appStore.getIsDark) {
-      headerTheme.value = '#fff'
-      setHeaderTheme('#fff')
-    } else {
-      setMenuTheme(unref(menuTheme))
+    () => layout.value,
+    (n) => {
+      if (n === 'top' && !appStore.getIsDark) {
+        headerTheme.value = '#fff'
+        setHeaderTheme('#fff')
+      } else {
+        setMenuTheme(unref(menuTheme))
+      }
     }
-  }
 )
 
 // 拷贝
 const copyConfig = async () => {
-  const { copy, copied } = useClipboard({
+  const {copy, copied} = useClipboard({
     source: `
 // 面包屑
 breadcrumb: ${appStore.getBreadcrumb},
@@ -179,7 +179,7 @@ theme: {
 
 // 清空缓存
 const clear = () => {
-  const { wsCache } = useCache()
+  const {wsCache} = useCache()
   wsCache.delete('layout')
   wsCache.delete('theme')
   wsCache.delete('isDark')
@@ -189,11 +189,11 @@ const clear = () => {
 
 <template>
   <div
-    :class="prefixCls"
-    class="fixed top-[45%] right-0 w-40px h-40px text-center leading-40px bg-[var(--el-color-primary)] cursor-pointer"
-    @click="drawer = true"
+      :class="prefixCls"
+      class="fixed top-[45%] right-0 w-40px h-40px text-center leading-40px bg-[var(--el-color-primary)] cursor-pointer"
+      @click="drawer = true"
   >
-    <Icon icon="ant-design:setting-outlined" color="#fff" />
+    <Icon icon="ant-design:setting-outlined" color="#fff"/>
   </div>
 
   <ElDrawer v-model="drawer" direction="rtl" size="350px">
@@ -204,17 +204,17 @@ const clear = () => {
     <div class="text-center">
       <!-- 主题 -->
       <ElDivider>{{ t('setting.theme') }}</ElDivider>
-      <ThemeSwitch />
+      <ThemeSwitch/>
 
       <!-- 布局 -->
       <ElDivider>{{ t('setting.layout') }}</ElDivider>
-      <LayoutRadioPicker />
+      <LayoutRadioPicker/>
 
       <!-- 系统主题 -->
       <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
       <ColorRadioPicker
-        v-model="systemTheme"
-        :schema="[
+          v-model="systemTheme"
+          :schema="[
           '#409eff',
           '#009688',
           '#536dfe',
@@ -224,14 +224,14 @@ const clear = () => {
           '#9c27b0',
           '#ff9800'
         ]"
-        @change="setSystemTheme"
+          @change="setSystemTheme"
       />
 
       <!-- 头部主题 -->
       <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
       <ColorRadioPicker
-        v-model="headerTheme"
-        :schema="[
+          v-model="headerTheme"
+          :schema="[
           '#fff',
           '#151515',
           '#5172dc',
@@ -241,15 +241,15 @@ const clear = () => {
           '#009688',
           '#383f45'
         ]"
-        @change="setHeaderTheme"
+          @change="setHeaderTheme"
       />
 
       <!-- 菜单主题 -->
       <template v-if="layout !== 'top'">
         <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
         <ColorRadioPicker
-          v-model="menuTheme"
-          :schema="[
+            v-model="menuTheme"
+            :schema="[
             '#fff',
             '#001529',
             '#212121',
@@ -259,16 +259,16 @@ const clear = () => {
             '#001628',
             '#344058'
           ]"
-          @change="setMenuTheme"
+            @change="setMenuTheme"
         />
       </template>
     </div>
 
     <!-- 界面显示 -->
     <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
-    <InterfaceDisplay />
+    <InterfaceDisplay/>
 
-    <ElDivider />
+    <ElDivider/>
     <div>
       <ElButton type="primary" class="w-full" @click="copyConfig">{{ t('setting.copy') }}</ElButton>
     </div>

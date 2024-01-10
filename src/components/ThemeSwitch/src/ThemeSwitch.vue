@@ -17,7 +17,6 @@ const appStore = useAppStore()
 
 // 初始化获取是否是暗黑主题
 const isDark = ref(appStore.getIsDark)
-
 // 设置switch的背景颜色
 const blackColor = 'var(--el-color-black)'
 

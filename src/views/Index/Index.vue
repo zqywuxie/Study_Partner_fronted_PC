@@ -41,9 +41,9 @@
               :xl="11"
               :xs="100"
             >
-              <el-card class="card" shadow="hover" @click="toUserInfo(user.id)">
+              <el-card class="card" shadow="hover" >
                 <div>
-                  <el-image :src="user.avatarUrl" fit="contain" style="height: 140px" />
+                  <el-image v-if="user.avatarUrl" :src="user.avatarUrl" fit="contain" style="height: 140px" />
                 </div>
                 <div style="padding: 1px">
                   <span>{{ user.username }}</span>
@@ -69,7 +69,7 @@
                       user.profile ? user.profile.substring(-1, 9) : '该用户懒，没有简介'
                     }}</div>
                     <!--                    click.stop 阻止冒泡-->
-                    <el-button class="button" type="primary" text @click.stop>联系我</el-button>
+                    <el-button class="button" type="primary" text @click="toUserInfo(user.id)">联系我</el-button>
                   </div>
                 </div>
               </el-card>

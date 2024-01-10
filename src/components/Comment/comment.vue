@@ -94,7 +94,7 @@
 <!--https://blog.csdn.net/zLanaDelRey/article/details/100997792-->
 <script>
 import { ChatLineSquare, Search, Star } from '@element-plus/icons-vue'
-import { currentUserUsingGET } from '@/servers/api/userController'
+import { currentUserUsingGet } from '@/servers/api/userController'
 
 const clickoutside = {
   // 初始化指令
@@ -225,7 +225,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        let data = await currentUserUsingGET().then((res) => {
+        let data = await currentUserUsingGet().then((res) => {
           return res.data
         })
         return data

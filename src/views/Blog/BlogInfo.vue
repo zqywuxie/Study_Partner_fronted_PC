@@ -67,17 +67,14 @@
 
 <script lang="ts" setup>
 import moment from 'moment'
-import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import {useRoute, useRouter} from 'vue-router'
+import {onMounted, ref} from 'vue'
 
-import { getBlogByIdUsingGET } from '@/servers/api/blogController'
-import { listBlogCommentsUsingGET } from '@/servers/api/commentsController'
-import { InfoFilled } from '@element-plus/icons-vue'
-import { useAppStoreWithOut } from '@/store/modules/app'
-import { useCache } from '@/hooks/web/useCache'
-import { ElMessage } from 'element-plus'
+import {getBlogByIdUsingGet} from '@/servers/api/blogController'
+import {listBlogCommentsUsingGet} from '@/servers/api/commentsController'
+import {useAppStoreWithOut} from '@/store/modules/app'
+import {useCache} from '@/hooks/web/useCache'
 import comment from '@/components/Comment/comment.vue'
-import User = API.User
 
 const router = useRouter()
 const route = useRoute()
@@ -107,13 +104,13 @@ if (currentUser.value.tags) {
 let imageList = ref([])
 
 async function getBlogInfo() {
-  const res = await getBlogByIdUsingGET({
+  const res = await getBlogByIdUsingGet({
     id: blogId
   })
   if (res.data.images) {
     imageList.value = res.data.images.split(',')
   }
-  const comments = await listBlogCommentsUsingGET({
+  const comments = await listBlogCommentsUsingGet({
     blogId: blogId
   })
   // console.log(comments)

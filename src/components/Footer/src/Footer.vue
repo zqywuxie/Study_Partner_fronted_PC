@@ -17,6 +17,7 @@ const title = computed(() => appStore.getTitle)
     :class="prefixCls"
     class="text-center text-[var(--el-text-color-placeholder)] bg-[var(--app-contnet-bg-color)] h-[var(--app-footer-height)] leading-[var(--app-footer-height)] dark:bg-[var(--el-bg-color)]"
   >
-    <a href="https://beian.miit.gov.cn" >粤ICP备2022055363号</a>
+<!--    todo 备案号-->
+<!--    <a href="https://beian.miit.gov.cn" >粤ICP备2022055363号</a>-->
   </div>
 </template>

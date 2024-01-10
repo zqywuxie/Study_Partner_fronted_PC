@@ -5,16 +5,14 @@ import {useI18n} from '@/hooks/web/useI18n'
 import {ElButton, ElCheckbox, ElLink, ElMessage} from 'element-plus'
 import {required} from '@/utils/formRules'
 import {useForm} from '@/hooks/web/useForm'
-import {getAdminRoleApi, getTestRoleApi} from '@/api/login'
-import type {UserLoginType} from '@/api/login/types'
 import {useCache} from '@/hooks/web/useCache'
 import {useAppStore} from '@/store/modules/app'
 import {usePermissionStore} from '@/store/modules/permission'
-import type {RouteLocationNormalizedLoaded, RouteRecordRaw} from 'vue-router'
+import type {RouteLocationNormalizedLoaded} from 'vue-router'
 import {useRoute, useRouter} from 'vue-router'
-import {currentUserUsingGET, LoginUsingPOST} from '@/servers/api/userController'
-import UserLoginRequest = API.LoginRequest
-import {userLoginUsingPOST} from "@/api/langbei/userController";
+import router from "@/router";
+import UserLoginRequest = API.LoginRequest;
+import {loginUsingPost} from "@/servers/api/userController";
 
 const appStore = useAppStore()
 
@@ -142,16 +140,16 @@ const signIn = async () => {
       const {getFormData} = methods
       const formData = await getFormData<UserLoginRequest>()
 
-      const res = await userLoginUsingPOST(formData)
+      const res = await loginUsingPost(formData)
           .catch(() => {
           })
           .finally(() => (loading.value = false))
-      console.log(res)
+      // console.log(res)
       if (res) {
         const {wsCache} = useCache()
         wsCache.set(appStore.getUserInfo, res.data)
         // getRole()
-        await push('/index')
+        location.replace("/")
       }
     }
   })

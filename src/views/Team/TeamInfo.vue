@@ -6,22 +6,23 @@
           <template #header>
             <div class="team-card-header">
               <span>{{ teamInfo.name }}</span>
-              <el-button v-if="!teamInfo.hasJoin" class="button" type="primary" @click="joinTeam">加入队伍</el-button>
-              <el-button v-if="teamInfo?.userId === currentUser.id " class="button" type="primary" @click="toEditTeam">
-                修改队伍信息
-              </el-button>
+              <div>
+                <el-button v-if="!teamInfo.hasJoin" class="button" type="primary" @click="joinTeam">加入队伍</el-button>
+                <div class="button-group" v-if="teamInfo?.userId === currentUser.id">
+                  <el-button class="button" type="primary" @click="toEditTeam" :icon="Edit">
+                    修改队伍信息
+                  </el-button>
+                  <el-button class="button" type="primary" :icon="ChatDotSquare" @click="openGroupChat">
+                    群聊
+                  </el-button>
+                </div>
+              </div>
             </div>
           </template>
-          <div class="team-card-info" style="display: flex;  align-items: center;">
-            <el-image :src="teamInfo.avatarUrl" fit="fill" style="width: 100px; height: 100px; margin-right: 20px;"/>
-            <el-descriptions
-                :column="4"
-                :title="teamInfo.description"
-                border
-                direction="vertical"
-            >
-              <el-descriptions-item label="创建时间">{{ moment(teamInfo.createTime).format('lll') }}
-              </el-descriptions-item>
+          <div class="team-card-info" style="display: flex; align-items: center;">
+            <el-image :src="teamInfo.avatarUrl" fit="fill" style="width: 100px; height: 100px; margin-right: 20px;" />
+            <el-descriptions :column="4" :title="teamInfo.description" border direction="vertical">
+              <el-descriptions-item label="创建时间">{{ moment(teamInfo.createTime).format('lll') }}</el-descriptions-item>
               <el-descriptions-item :span="2" label="截止时间">
                 {{ teamInfo.expireTime ? moment(teamInfo.expireTime).format('lll') : '无限期' }}
               </el-descriptions-item>
@@ -30,32 +31,16 @@
         </el-card>
       </div>
     </el-col>
+
+
     <el-col :span="6" style="margin-left: 5px">
       <el-card>
         <template #header>
-          <!--          <div style="display: flex;align-items: center" @click="toUserInfo(teamInfo.createUser?.id)">-->
-          <!--            <el-avatar :size="60" :src="teamInfo.createUser?.avatarUrl" style="margin-right: 5px"/>-->
-          <!--            <span>{{ teamInfo.createUser?.username }}</span>-->
-          <!--          </div>-->
           公告
         </template>
 
         <div>
           {{ teamInfo.announce }}
-          <!--          <el-descriptions-->
-          <!--              :column="1"-->
-          <!--              class="margin-top"-->
-          <!--              size="small"-->
-          <!--          >-->
-          <!--            <el-descriptions-item-->
-          <!--                label="简介:">-->
-          <!--              {{ teamInfo.createUser?.profile }}-->
-          <!--            </el-descriptions-item>-->
-          <!--            <el-descriptions-item-->
-          <!--                label="联系方式:">-->
-          <!--              {{ teamInfo.createUser?.contactInfo }}-->
-          <!--            </el-descriptions-item>-->
-          <!--          </el-descriptions>-->
         </div>
       </el-card>
     </el-col>
@@ -67,7 +52,7 @@
         <template #header>
           <div class="team-info-detail-card-header">
             <span>队伍详细信息</span>
-            <el-button v-if="teamInfo.hasJoin" class="button" type="danger" @click="quitTeam">退出队伍</el-button>
+            <el-button v-if="teamInfo.hasJoin" class="button" type="danger" @click="quitTeam" :icon="Close">退出队伍</el-button>
           </div>
         </template>
         <el-descriptions :column="1">
@@ -140,6 +125,7 @@ import {searchTeamByIdUsingGet, joinTeamUsingPost, quitTeamUsingPost} from "@/se
 import {useAppStoreWithOut} from "@/store/modules/app";
 import {useCache} from "@/hooks/web/useCache";
 import {ElMessage} from "element-plus";
+import {ChatDotSquare, Close, Edit} from "@element-plus/icons-vue";
 
 const router = useRouter();
 const route = useRoute();

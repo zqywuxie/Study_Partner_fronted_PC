@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
-import { request } from 'umi'
+// import { request } from 'umi'
+import {service} from "@/config/axios";
 
 /** 文件上传 POST /api/fileOss/upload */
 export async function uploadOssFileUsingPost(
@@ -32,7 +33,7 @@ export async function uploadOssFileUsingPost(
     }
   })
 
-  return request<API.CommonResultString_>('/api/fileOss/upload', {
+  return service<API.CommonResultString_>('/api/fileOss/upload', {
     method: 'POST',
     params: {
       ...params

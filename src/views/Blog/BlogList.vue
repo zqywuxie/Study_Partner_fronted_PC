@@ -1,86 +1,85 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <el-container>
-        <el-header>
-          <div v-if="ModeType === 'default'" style="display: inline-block; margin-right: 10px">
-            <div style="display: flex; align-items: center">
-              <el-input
-                v-model="searchText"
-                :prefix-icon="Search"
-                class="w-50 m-2"
-                placeholder="搜索你感兴趣的博客吧吧！"
-                @change="doSearch"
-              />
-              <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
-              <el-button class="w-50 m-2" @click="createBlog">创建博客 </el-button>
+    <el-header>
+      <div v-if="ModeType === 'default'" style="display: inline-block; margin-right: 10px">
+        <div style="display: flex; align-items: center">
+          <el-input
+              v-model="searchText"
+              :prefix-icon="Search"
+              class="w-50 m-2"
+              placeholder="搜索你感兴趣的博客吧吧！"
+              @change="doSearch"
+          />
+          <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
+          <el-button type="primary" @click="createBlog" :icon="Edit">创建博客</el-button>
+        </div>
+      </div>
+      <div v-else></div>
+    </el-header>
+    <el-row>
+      <el-col :span="18">
+        <el-main>
+          <el-empty v-if="blogList.length === 0" description="暂无博客"/>
+          <blogCard :blog-list="blogList"/>
+        </el-main>
+      </el-col>
+      <el-col :span="6">
+        <el-card class="author-card">
+          <div class="author-info">
+            <el-avatar class="author-avatar" :src="currentUser.avatarUrl" :alt="currentUser.username"></el-avatar>
+            <div class="author-details">
+              <p class="author-name">{{ currentUser.username }}</p>
             </div>
           </div>
-          <div v-else></div>
-        </el-header>
-        <el-main>
-          <el-empty v-if="blogList.length === 0" description="暂无博客" />
-          <el-row v-else :gutter="20" class="mb-4">
-            <el-col
-              v-for="(blog, index) in blogList"
-              :key="blog.id"
-              :lg="4"
-              :md="8"
-              :sm="10"
-              :xl="11"
-              :xs="100"
-            >
-              <el-card class="blog-card" shadow="hover" @click="toBlogInfo(blog.id)">
-                <div class="blog-card-cover">
-                  <el-image
-                    v-if="blog.images"
-                    :src="blog.images"
-                    fit="cover"
-                    style="height: 140px; border-radius: 8px"
-                  />
-                </div>
-                <div style="padding: 14px">
-                  <span>{{ blog.title }}</span>
-                  <div class="bottom">
-                    <el-avatar
-                      :src="blog.author?.avatarUrl"
-                      @click="toUserInfo(blog.author.id)"
-                      @click.stop
-                      >Operating
-                    </el-avatar>
-                    <el-tag>{{ blog.author?.username }}</el-tag>
-                  </div>
-                </div>
-              </el-card>
-            </el-col>
-          </el-row>
-        </el-main>
 
-        <div style="margin: 0 auto">
-          <el-pagination
-            v-if="ModeType === 'default'"
-            v-model:current-page="pageNum"
-            v-model:page-size="pageSize"
-            :pager-count="11"
-            :total="total"
-            layout="prev, pager, next"
-          />
-        </div>
-      </el-container>
-    </el-container>
+          <div class="author-bio">
+            <p>{{ currentUser.profile }}</p>
+          </div>
+
+          <div class="author-stats">
+            <div class="stat-item">
+              <span class="stat-label">博客数:</span>
+              <span class="stat-value">123</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">评论数:</span>
+              <span class="stat-value">2323</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">点赞数:</span>
+              <span class="stat-value">42424</span>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+
+    <div style="margin: 0 auto">
+      <el-pagination
+          v-if="ModeType === 'default'"
+          v-model:current-page="pageNum"
+          v-model:page-size="pageSize"
+          :pager-count="11"
+          :total="total"
+          layout="prev, pager, next"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import {onMounted, ref, watch} from 'vue'
+import blogCard from '@/components/BlogCard/blog_list.vue'
 // todo 添加一个关键词搜索博文
-import { listBlogPageUsingPost, likeBlogUsingPut } from '../../servers/api/blogController'
+import {listBlogPageUsingPost} from '../../servers/api/blogController'
 
-import { useAppStoreWithOut } from '../../store/modules/app'
-import { useCache } from '../../hooks/web/useCache'
-import { Star, ChatLineRound, Search } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
-import { searchByTextUsingGet, matchUsersUsingGet } from '@/servers/api/userController'
+import {useAppStoreWithOut} from '../../store/modules/app'
+import {useCache} from '../../hooks/web/useCache'
+import {Edit, Search} from '@element-plus/icons-vue'
+import {useRouter} from 'vue-router'
+import {matchUsersUsingGet, searchByTextUsingGet} from '@/servers/api/userController'
+import Blog_list from "@/components/BlogCard/blog_list.vue";
 // import {} from "@element-plus/icons-vue/dist/types";
 // import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
@@ -91,7 +90,7 @@ const pageSize = ref(12)
 const total = ref()
 const ModeType = ref('default')
 const appStore = useAppStoreWithOut()
-const { wsCache } = useCache()
+const {wsCache} = useCache()
 const currentUser = ref()
 const searchText = ref('')
 
@@ -216,14 +215,14 @@ const modeChange = async () => {
 const toBlogInfo = (id) => {
   router.push({
     path: '/blog/info',
-    query: { blogId: id }
+    query: {blogId: id}
   })
 }
 
 const toUserInfo = (id) => {
   router.push({
     path: '/user/info',
-    query: { id: id }
+    query: {id: id}
   })
 }
 </script>
@@ -252,5 +251,53 @@ const toUserInfo = (id) => {
   justify-content: space-between;
   margin-top: 13px;
   line-height: 12px;
+}
+
+.author-card {
+  width: 300px; /* Adjust based on your design */
+  margin: 20px; /* Adjust based on your design */
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.author-details {
+  p {
+    margin: 0;
+    font-weight: bold;
+  }
+}
+
+.author-bio {
+  margin-bottom: 10px;
+}
+
+.author-stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.stat-label {
+  color: #888;
+}
+
+.stat-value {
+  font-weight: bold;
 }
 </style>

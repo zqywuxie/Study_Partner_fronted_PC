@@ -9,7 +9,7 @@ export async function followUserUsingPost(
   options?: { [key: string]: any }
 ) {
   const { followerId: param0, ...queryParams } = params
-  return request<API.CommonResultString_>(`/api/follow/${param0}`, {
+  return service(`/api/follow/${param0}`, {
     method: 'POST',
     params: { ...queryParams },
     ...(options || {})
@@ -18,7 +18,7 @@ export async function followUserUsingPost(
 
 /** 获取粉丝 GET /api/follow/fans */
 export async function listFansUsingGet(options?: { [key: string]: any }) {
-  return request<API.CommonResultListUserVO_>('/api/follow/fans', {
+  return service('/api/follow/fans', {
     method: 'GET',
     ...(options || {})
   })
@@ -26,7 +26,7 @@ export async function listFansUsingGet(options?: { [key: string]: any }) {
 
 /** 获取粉丝数量 GET /api/follow/fansCount */
 export async function fansCountUsingGet(options?: { [key: string]: any }) {
-  return request<API.CommonResultInt_>('/api/follow/fansCount', {
+  return service('/api/follow/fansCount', {
     method: 'GET',
     ...(options || {})
   })
@@ -34,7 +34,7 @@ export async function fansCountUsingGet(options?: { [key: string]: any }) {
 
 /** 获取我关注的用户 GET /api/follow/my */
 export async function listMyFollowUsingGet(options?: { [key: string]: any }) {
-  return request<API.CommonResultListUserVO_>('/api/follow/my', {
+  return service('/api/follow/my', {
     method: 'GET',
     ...(options || {})
   })
@@ -42,7 +42,7 @@ export async function listMyFollowUsingGet(options?: { [key: string]: any }) {
 
 /** 我关注数 GET /api/follow/myCount */
 export async function myFollowCountUsingGet(options?: { [key: string]: any }) {
-  return request<API.CommonResultInt_>('/api/follow/myCount', {
+  return service('/api/follow/myCount', {
     method: 'GET',
     ...(options || {})
   })

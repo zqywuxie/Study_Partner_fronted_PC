@@ -51,17 +51,14 @@
 </template>
 
 <script lang="ts" setup>
-import { Editor } from '@/components/Editor'
-import { Plus } from '@element-plus/icons-vue'
-import { ElMessage, UploadProps } from 'element-plus'
-import { useRoute, useRouter } from 'vue-router'
-import {
-  addBlogUsingPOST,
-  getBlogByIdUsingGET,
-  updateBlogUsingPUT
-} from '@/servers/api/blogController'
-import { currentUserUsingGET } from '@/servers/api/userController'
-import { onMounted, ref } from 'vue'
+import {Editor} from '@/components/Editor'
+import {Plus} from '@element-plus/icons-vue'
+import {ElMessage, UploadProps} from 'element-plus'
+import {useRoute, useRouter} from 'vue-router'
+import {addBlogUsingPost, getBlogByIdUsingGet, updateBlogUsingPut} from '@/servers/api/blogController'
+import {currentUserUsingGet} from '@/servers/api/userController'
+import {onMounted, ref} from 'vue'
+import {PATH_URL} from '@/config/axios'
 
 const router = useRouter()
 const route = useRoute()
@@ -70,7 +67,6 @@ const blogInfo = ref<API.BlogVO>({})
 const oldMaxNum = ref()
 const typeText = ref('创建队伍')
 const userInfo = ref()
-import { PATH_URL } from '@/config/axios'
 
 // 富文本编辑器
 const defaultHtml = ref('<p>hello <strong>world</strong></p>')
@@ -79,7 +75,7 @@ const change = (html: string) => {
 }
 
 async function getBlogById() {
-  const res = await getBlogByIdUsingGET({
+  const res = await getBlogByIdUsingGet({
     id: blogId
   })
   console.log(res)
@@ -89,7 +85,7 @@ async function getBlogById() {
 }
 
 onMounted(async () => {
-  userInfo.value = await currentUserUsingGET()
+  userInfo.value = await currentUserUsingGet()
   // console.log(userInfo)
   console.log(blogId)
   if (blogId) {
@@ -99,7 +95,7 @@ onMounted(async () => {
 
 // todo 博客更新
 async function updateTeam() {
-  const res = await updateBlogUsingPUT({
+  const res = await updateBlogUsingPut({
     avatarUrl: blogInfo.value.avatarUrl,
     description: blogInfo.value.description,
     // 队伍公告
@@ -125,7 +121,7 @@ async function updateTeam() {
 }
 
 async function createTeam() {
-  const res = await addBlogUsingPOST({
+  const res = await addBlogUsingPost({
     avatarUrl: blogInfo.value.avatarUrl,
     description: blogInfo.value.description,
     // announce: teamInfo.value.announce,
