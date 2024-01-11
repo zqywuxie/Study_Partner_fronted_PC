@@ -124,7 +124,7 @@ async function getBlogList() {
 }
 
 //分页查询用户
-async function searchUserPage() {
+async function searchBlogPage() {
   const res = await searchByTextUsingGet({
     searchText: searchText.value,
     pageNum: pageNum.value,
@@ -161,7 +161,7 @@ async function searchUserPage() {
 
 //监听页数变化
 watch(pageNum, (newVal, oldVal) => {
-  searchUserPage()
+  searchBlogPage()
 })
 
 //搜索用户
@@ -169,7 +169,7 @@ const doSearch = async () => {
   if (searchText.value === '') {
     await getBlogList()
   } else {
-    await searchUserPage()
+    await searchBlogPage()
   }
 }
 
@@ -204,7 +204,7 @@ const modeChange = async () => {
     if (searchText.value === '') {
       await getBlogList()
     } else {
-      await searchUserPage()
+      await searchBlogPage()
     }
   } else if (ModeType.value === 'match') {
     await matchUser()

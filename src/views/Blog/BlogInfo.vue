@@ -7,10 +7,10 @@
             <div class="blog-card-header">
               <span>{{ blogInfo.title }}</span>
               <el-button
-                v-if="blogInfo?.userId === currentUser.id"
-                class="edit-button"
-                type="primary"
-                @click="toEditBlog"
+                  v-if="blogInfo?.userId === currentUser.id"
+                  class="edit-button"
+                  type="primary"
+                  @click="toEditBlog"
               >
                 修改博客信息
               </el-button>
@@ -19,12 +19,12 @@
 
           <div style="display: flex; justify-content: center; align-items: center">
             <el-carousel
-              indicator-position="outside"
-              v-if="imageList.length >= 1"
-              style="width: 350px"
+                indicator-position="outside"
+                v-if="imageList.length >= 1"
+                style="width: 350px"
             >
               <el-carousel-item v-for="item in imageList" :key="item" style="text-align: center">
-                <el-image :src="item" style="max-width: 100%; max-height: 100%" />
+                <el-image :src="item" style="max-width: 100%; max-height: 100%"/>
               </el-carousel-item>
             </el-carousel>
           </div>
@@ -62,7 +62,7 @@
   </el-row>
 
   <!--  评论-->
-  <comment :comment-list="commentList" />
+  <comment :comment-list="commentList"/>
 </template>
 
 <script lang="ts" setup>
@@ -82,7 +82,7 @@ const blogId = route.query.blogId
 const blogInfo = ref<API.BlogVO>({})
 const commentList = ref<API.CommentsVO[]>([])
 const appStore = useAppStoreWithOut()
-const { wsCache } = useCache()
+const {wsCache} = useCache()
 const currentUser = ref()
 
 const toEditBlog = () => {
@@ -105,7 +105,7 @@ let imageList = ref([])
 
 async function getBlogInfo() {
   const res = await getBlogByIdUsingGet({
-    id: blogId
+    blogId: blogId
   })
   if (res.data.images) {
     imageList.value = res.data.images.split(',')
@@ -126,7 +126,7 @@ onMounted(async () => {
 const toUserInfo = (id: number) => {
   router.push({
     path: '/user/info',
-    query: { id: id }
+    query: {id: id}
   })
 }
 </script>

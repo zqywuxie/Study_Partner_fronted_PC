@@ -5,6 +5,23 @@ import {Layout} from '@/utils/routerHelper'
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
     {
+        path: '/welcome',
+        component: Layout,
+        name: 'welcome',
+        meta: {},
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Index/Welcome.vue'),
+                name: 'welCome',
+                meta: {
+                    title: '操作台',
+                    icon: 'majesticons:home'
+                }
+            },
+        ]
+    },
+    {
         path: '/',
         component: Layout,
         redirect: '/index',
@@ -19,7 +36,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                     title: '找伙伴',
                     icon: 'game-icons:three-friends'
                 }
-            }
+            },
         ]
     },
     {
@@ -93,7 +110,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                 name: 'blogList',
                 meta: {
                     title: '博客广场',
-                    icon: 'material-symbols:bookmark'
+                    icon: 'mdi:blog'
                 }
             },
             {
@@ -112,23 +129,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                     hidden: true
                 }
             }
-        ]
-    },
-    {
-        path: '/dashboard',
-        component: Layout,
-        name: 'dashboard',
-        meta: {},
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/Dashboard/Workplace.vue'),
-                name: 'workplace',
-                meta: {
-                    title: '工作盘',
-                    icon: 'material-symbols:bookmark'
-                }
-            },
         ]
     },
     {
@@ -165,6 +165,12 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                 path: 'info',
                 component: () => import('@/views/User/Info.vue'),
                 name: 'userInfo',
+                meta: {}
+            },
+            {
+                path: 'space',
+                component: () => import('@/views/User/space.vue'),
+                name: 'userSpace',
                 meta: {}
             }
         ]

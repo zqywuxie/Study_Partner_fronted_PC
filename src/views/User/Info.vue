@@ -36,7 +36,9 @@
               {{ currentUser.useraccount }}
             </el-descriptions-item>
             <el-descriptions-item align="left" label="角色:" label-align="right">
-              {{ currentUser.userRole === 1 ? '管理员' : '普通用户' }}
+              <el-tag :type="currentUser.userRole === 1?'primary':'success'">
+                {{ currentUser.userRole === 1 ? '管理员' : '普通用户' }}
+              </el-tag>
             </el-descriptions-item>
             <el-descriptions-item align="left" label="加入时间:" label-align="right">
               {{
@@ -87,7 +89,9 @@
               </el-tag>
             </el-descriptions-item>
             <el-descriptions-item align="left" label="角色:" label-align="right">
-              {{ currentUser.userRole === 1 ? '管理员' : '伙伴' }}
+              <el-tag :type="currentUser.userRole === 1?'primary':'success'">
+                {{ currentUser.userRole === 1 ? '管理员' : '普通用户' }}
+              </el-tag>
             </el-descriptions-item>
           </el-descriptions>
         </el-card>
