@@ -3,11 +3,15 @@ import {onMounted, ref} from "vue";
 import {useCache} from "@/hooks/web/useCache";
 import {useAppStoreWithOut} from "@/store/modules/app";
 import {CalendarDateType, CalendarInstance} from "element-plus";
-import {Star} from "@element-plus/icons-vue";
+import {InfoFilled, Star} from "@element-plus/icons-vue";
 import {listMessageUsingGet} from "@/servers/api/messageController";
 import {getMessageType, MessageTypeEnum} from "../../../types/enum";
 import Highlight from "@/components/Highlight/src/Highlight.vue";
 import MessageVO = API.MessageVO;
+import highlightKeys from "../../../types/highlightKeys";
+import router from "@/router";
+import {getLikeCountUsingGet} from "@/servers/api/likeController";
+import {CountTo} from "@/components/CountTo";
 
 const currentUser = ref<API.UserVO>()
 const {wsCache} = useCache()
@@ -15,6 +19,25 @@ const appStore = useAppStoreWithOut()
 currentUser.value = wsCache.get(appStore.getUserInfo)
 const messageList = ref<MessageVO[]>([])
 const loading = ref(false)
+const isLike = ref(false)
+const likeCount = ref(0)
+
+const checkInToday = () => {
+  isLike.value = true
+}
+
+// 跳转用户信息
+const toUserInfo = (id) => {
+  setTimeout(() => {
+    router.push({
+      path: '/user/info',
+      query: {id: id}
+    })
+  }, 200)
+
+}
+
+// 时间转换
 const useTimeAgo = (time: Date | number | string) => {
   const time1 = new Date(time);
   const now = new Date();
@@ -43,8 +66,6 @@ const useTimeAgo = (time: Date | number | string) => {
 }
 
 const projects = [{}, {}]
-
-const dynamics = [{}, {}]
 const popView = ref(false)
 const calendar = ref<CalendarInstance>()
 const selectDate = (val: CalendarDateType) => {
@@ -52,16 +73,17 @@ const selectDate = (val: CalendarDateType) => {
   calendar.value.selectDate(val)
 }
 
-const getMessageList = async () => {
-  const res = await listMessageUsingGet({}).then((resp) => {
+const init = async () => {
+  messageList.value = await listMessageUsingGet({}).then((resp) => {
     return resp.data
   })
-  messageList.value = res
-  console.log(res)
+  likeCount.value = await getLikeCountUsingGet({}).then((resp) => {
+    return resp.data
+  })
 }
 
 onMounted(() => {
-  getMessageList()
+  init()
 })
 
 </script>
@@ -95,7 +117,7 @@ onMounted(() => {
                 <CountTo
                     class="text-20px"
                     :start-val="0"
-                    :end-val="12313"
+                    :end-val="likeCount"
                     :duration="2600"
                 />
               </div>
@@ -166,16 +188,30 @@ onMounted(() => {
       <ElCard shadow="never" class="mt-20px">
         <template #header>
           <div class="flex justify-between">
-            <span>动态</span>
+            <span>消息</span>
             <ElLink type="primary" :underline="false">更多</ElLink>
+            <el-popconfirm
+                width="220"
+                confirm-button-text="确定清空"
+                cancel-button-text="让我想想"
+                :icon="InfoFilled"
+                icon-color="#626AEF"
+                title="你确定清空所有信息吗"
+            >
+              <template #reference>
+                <ElLink type="primary" :underline="false" class="ml-10px">清空信息</ElLink>
+              </template>
+            </el-popconfirm>
+
           </div>
         </template>
 
-        <!--        动态-->
+        <!--消息展示-->
         <ElSkeleton :loading="loading" animated>
           <div v-for="message in messageList">
             <div class="flex items-center">
               <img
+                  @click="toUserInfo(message.fromUser?.id)"
                   :src="message.fromUser?.avatarUrl"
                   alt=""
                   class="w-35px h-35px rounded-[50%] mr-20px"
@@ -184,7 +220,7 @@ onMounted(() => {
                 <div class="text-14px">
                   <span>{{ message.fromUser.username }}</span>
                   <span>&nbsp;</span>
-                  <Highlight>
+                  <Highlight :keys="[highlightKeys.keys1,highlightKeys.keys2,highlightKeys.keys3,highlightKeys.keys4]">
                     {{ getMessageType(message.type) }}
                   </Highlight>
                   <span>&nbsp;</span>
@@ -199,6 +235,12 @@ onMounted(() => {
                 <div class="mt-15px text-12px text-gray-400">
                   "{{ useTimeAgo(message.createTime) }}"
                 </div>
+              </div>
+              <div class="ml-auto">
+                <el-button text :type="message.isRead ? 'success':'primary'" @click="markAsRead(message)">
+                  {{ message.isRead ? '已读' : '未读' }}
+                </el-button>
+                <el-button text type="danger" @click="deleteMessage(message)">删除</el-button>
               </div>
             </div>
             <ElDivider/>
@@ -218,11 +260,18 @@ onMounted(() => {
               <el-button size="small" @click="selectDate('next-month')">
                 Next Month
               </el-button>
-              <el-button type="primary" :icon="Star" class="sign-in-button">签到</el-button>
+              <span v-if="isLike">
+                <el-button type="primary" :icon="Star" class="sign-in-button" @click="checkInToday">签到</el-button>
+              </span>
+              <span v-else>
+                <el-button type="danger" disabled :icon="Star" class="sign-in-button"
+                           @click="checkInToday">已签</el-button>
+              </span>
             </el-button-group>
           </template>
           <template #dateCell="{ data }">
-            <!--            todo 如果选中 就显示当天的内容-->
+            <!--todo 如果选中 就显示当天的内容-->
+            <!--todo 签到日子-->
             <p :class="data.isSelected ? 'is-selected' : ''">
               {{ data.day.split('-').slice(1).join('-') }}
               {{ data.isSelected ? '✔️' : '' }}

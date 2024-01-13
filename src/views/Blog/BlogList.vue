@@ -79,7 +79,6 @@ import {useCache} from '../../hooks/web/useCache'
 import {Edit, Search} from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
 import {matchUsersUsingGet, searchByTextUsingGet} from '@/servers/api/userController'
-import Blog_list from "@/components/BlogCard/blog_list.vue";
 // import {} from "@element-plus/icons-vue/dist/types";
 // import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
@@ -228,30 +227,7 @@ const toUserInfo = (id) => {
 </script>
 
 <style>
-.bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 13px;
-  line-height: 12px;
-}
 
-.card {
-  margin-bottom: 10px;
-}
-
-.profile {
-  color: #999;
-  font-size: 12px;
-}
-
-.bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 13px;
-  line-height: 12px;
-}
 
 .author-card {
   width: 300px; /* Adjust based on your design */

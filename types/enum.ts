@@ -7,16 +7,18 @@ export enum MessageTypeEnum {
     FOLLOW_NOTIFICATIONS,
 }
 
+
+
 export function getMessageType(type: number): string {
     switch (type) {
         case MessageTypeEnum.BLOG_LIKE:
-            return "点赞了你的博客";
+            return "赞了你的博客";
         case MessageTypeEnum.BLOG_COMMENT_LIKE:
             return "赞了你的评论";
         case MessageTypeEnum.COMMENT_ADD:
             return "评论了你的博客";
         case MessageTypeEnum.FRIEND_APPLICATION:
-            return "向你发起了请求";
+            return "向你发起了好友申请";
         case MessageTypeEnum.SYSTEM_MESSAGES:
             return "系统消息";
         case MessageTypeEnum.FOLLOW_NOTIFICATIONS:

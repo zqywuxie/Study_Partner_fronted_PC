@@ -1,20 +1,16 @@
 <template>
-  <div class="blog-list-container">
+  <el-row class="blog-list-container" justify="center" :gutter="20">
     <el-col v-for="blog in blogList" :key="blog.id" :span="16">
-      <el-card shadow="hover" style="" @click="toBlogInfo(blog.id)">
+      <el-card @click="toBlogInfo(blog.id)" class="blog-card" shadow="hover">
         <div class="blog-display">
           <div class="blog-cover">
-            <!-- Placeholder for blog cover image -->
-            <!-- Replace with actual cover image -->
-            <img :src="blog.coverImage" alt="Blog Cover"/>
+            <img :src="blog.coverImage" alt="Blog Cover" />
           </div>
           <div class="blog-details">
             <h2 class="blog-title">{{ blog.title }}</h2>
-            <p class="blog-content">
-              {{ blog.content }}
-            </p>
+            <p class="blog-content">{{ blog.content }}</p>
             <div class="author-info">
-              <img class="author-avatar" :src="blog.author?.avatarUrl" alt="Author Avatar"/>
+              <img class="author-avatar" :src="blog.author?.avatarUrl" alt="Author Avatar" />
               <div class="author-details">
                 <p class="author-name">{{ blog.author.username }}</p>
                 <p class="publish-time">{{ moment(blog.createTime).format("lll") }}</p>
@@ -23,11 +19,11 @@
             <div class="interactions">
               <i class="el-icon-thumb-up interactions-icon"></i>
               <el-icon>
-                <Pointer/>
+                <Pointer />
               </el-icon>
               <span class="like-count">100</span>
               <el-icon>
-                <ChatLineRound/>
+                <ChatLineRound />
               </el-icon>
               <span class="comment-count">50</span>
             </div>
@@ -35,35 +31,37 @@
         </div>
       </el-card>
     </el-col>
-  </div>
+  </el-row>
 </template>
 
-<script lang="ts" setup name="blogCard">
-import {ref, defineProps} from 'vue';
-import BlogVO = API.BlogVO;
-import {ChatLineRound, Pointer} from "@element-plus/icons-vue";
-import moment from "moment";
-import router from "@/router";
+<script setup lang="ts">
+import { ref, defineProps } from 'vue';
+import { ChatLineRound, Pointer } from '@element-plus/icons-vue';
+import moment from 'moment';
+import router from '@/router';
 
 const props = defineProps<{
-  blogList: BlogVO[]
+  blogList: BlogVO[];
 }>();
 
 const toBlogInfo = (id) => {
   router.push({
     path: '/blog/info',
-    query: {blogId: id}
-  })
-}
+    query: { blogId: id },
+  });
+};
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .blog-list-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 20px; /* Adjust based on your design */
+  gap: 20px;
+}
+
+.blog-card {
+  width: 100%;
 }
 
 .blog-display {
@@ -86,7 +84,6 @@ const toBlogInfo = (id) => {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
-  //background-color: #f5f5f5;
   position: relative;
 
   .blog-title {
@@ -97,7 +94,7 @@ const toBlogInfo = (id) => {
   .blog-content {
     font-size: 1rem;
     line-height: 1.5;
-    max-height: 120px; /* Adjust based on your design */
+    max-height: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
   }

@@ -5,13 +5,14 @@ import {Layout} from '@/utils/routerHelper'
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
     {
-        path: '/welcome',
+        path: '/',
+        redirect: '/welcome',
         component: Layout,
-        name: 'welcome',
+        name: 'root',
         meta: {},
         children: [
             {
-                path: '',
+                path: 'welcome',
                 component: () => import('@/views/Index/Welcome.vue'),
                 name: 'welCome',
                 meta: {
@@ -22,10 +23,9 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         ]
     },
     {
-        path: '/',
+        path: '/user',
         component: Layout,
-        redirect: '/index',
-        name: 'root',
+        name: 'user',
         meta: {},
         children: [
             {
@@ -37,6 +37,22 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                     icon: 'game-icons:three-friends'
                 }
             },
+            {
+                path: 'info',
+                component: () => import('@/views/User/Info.vue'),
+                name: 'userInfo',
+                meta: {
+                    hidden: true
+                }
+            },
+            {
+                path: 'space',
+                component: () => import('@/views/User/space.vue'),
+                name: 'userSpace',
+                meta: {
+                    hidden: true
+                }
+            }
         ]
     },
     {
@@ -149,28 +165,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
                 path: 'edit',
                 component: () => import('@/views/My/Edit.vue'),
                 name: 'myEdit',
-                meta: {}
-            }
-        ]
-    },
-    {
-        path: '/user',
-        component: Layout,
-        name: 'user',
-        meta: {
-            hidden: true
-        },
-        children: [
-            {
-                path: 'info',
-                component: () => import('@/views/User/Info.vue'),
-                name: 'userInfo',
-                meta: {}
-            },
-            {
-                path: 'space',
-                component: () => import('@/views/User/space.vue'),
-                name: 'userSpace',
                 meta: {}
             }
         ]

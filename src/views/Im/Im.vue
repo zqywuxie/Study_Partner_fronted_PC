@@ -10,13 +10,13 @@
               <span>在线列表</span>
             </div>
           </template>
-          <el-empty v-if="!onlineUsers || onlineUsers.length <= 1" description="还没有人在线喔~" />
+          <el-empty v-if="!onlineUsers || onlineUsers.length <= 1" description="还没有人在线喔~"/>
           <div v-for="item in onlineUsers" style="margin-bottom: 8px">
             <el-popover :width="200" placement="top-start" trigger="hover">
               <template #reference>
                 <div v-if="item.id !== currentUser.id" style="display: flex; align-items: center">
                   <el-badge class="item">
-                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)" />
+                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)"/>
                   </el-badge>
                   <span style="margin-left: 5px">{{ item.username }}</span>
                 </div>
@@ -28,7 +28,7 @@
             </el-popover>
           </div>
         </el-card>
-        <el-divider />
+        <el-divider/>
 
         <!--    队伍列表-->
         <el-card class="box-card" style="width: 200px">
@@ -38,13 +38,13 @@
               <span>群聊列表</span>
             </div>
           </template>
-          <el-empty v-if="!teamList || teamList < 1" description="你还未加入任何队伍~" />
+          <el-empty v-if="!teamList || teamList < 1" description="你还未加入任何队伍~"/>
           <div v-for="item in teamList" style="margin-bottom: 8px">
             <el-popover :width="200" placement="top-start" trigger="hover">
               <template #reference>
                 <div style="display: flex; align-items: center; margin-bottom: 20px">
                   <el-badge class="item">
-                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)" />
+                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)"/>
                   </el-badge>
                   <span style="margin-left: 5px">{{ item.name }}</span>
                   <el-tag class="ml-2" :type="item.status === 0 ? 'info' : 'danger'">
@@ -59,7 +59,7 @@
           </div>
         </el-card>
 
-        <el-divider />
+        <el-divider/>
 
         <!--好友列表-->
         <el-card class="box-card" style="width: 200px">
@@ -69,14 +69,14 @@
               <span>好友列表</span>
             </div>
           </template>
-          <el-empty v-if="!friendList || friendList.length === 0" description="快去认识新朋友吧~" />
+          <el-empty v-if="!friendList || friendList.length === 0" description="快去认识新朋友吧~"/>
           <div v-for="item in friendList" style="margin-bottom: 8px">
             <el-popover :width="200" placement="top-start" trigger="hover">
               <template #reference>
                 <div style="display: flex; align-items: center">
                   <!--badge-->
                   <el-badge class="item">
-                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)" />
+                    <el-avatar :size="50" :src="item.avatarUrl" @click="checkToChat(item)"/>
                   </el-badge>
                   <span style="margin-left: 5px">{{ item.username }}</span>
                   <!--todo 后期可以更换状态 -->
@@ -95,7 +95,7 @@
 
       <el-main style="padding: 0">
         <div v-if="!isChat">
-          <el-empty :image-size="200" description="快去聊天吧！" />
+          <el-empty :image-size="200" description="快去聊天吧！"/>
         </div>
 
         <div v-else style="width: 90%; margin: 0 auto">
@@ -103,12 +103,12 @@
             <el-card class="box-card">
               <div slot="header" class="im-card-header">
                 <div style="display: flex; align-items: center">
-                  <el-avatar :size="50" :src="toChat.avatarUrl" />
+                  <el-avatar :size="50" :src="toChat.avatarUrl"/>
                   <span style="margin-left: 5px">{{ toChat.name }}</span>
                 </div>
-                <el-button type="info" @click="getHistoryMessage(toChat)">获取历史消息 </el-button>
+                <el-button type="info" @click="getHistoryMessage(toChat)">获取历史消息</el-button>
                 <!--   todo 清空聊天记录方法-->
-                <el-button type="info" @click="getHistoryMessage(toChat)">清空聊天记录 </el-button>
+                <el-button type="info" @click="getHistoryMessage(toChat)">清空聊天记录</el-button>
                 <el-button type="info" @click="closeChat">关闭聊天</el-button>
               </div>
             </el-card>
@@ -116,8 +116,8 @@
 
           <!--   todo 设置陌生人聊天不超过x条信息-->
           <div
-            ref="divRef"
-            style="
+              ref="divRef"
+              style="
               background-color: rgba(0, 0, 0, 0.14);
               padding: 20px;
               border: 1px solid #ccc;
@@ -132,9 +132,9 @@
                 <el-popover :width="100" placement="top-start" trigger="click">
                   <template #reference>
                     <img
-                      :src="toChat.avatarUrl"
-                      alt=""
-                      style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px"
+                        :src="toChat.avatarUrl"
+                        alt=""
+                        style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px"
                     />
                   </template>
                   <div style="line-height: 20px">
@@ -144,7 +144,7 @@
                 </el-popover>
                 <!--          <div style="width: 50px; line-height: 30px; margin-left: 5px; color: #888; overflow: hidden; font-size: 14px">{{ item.username }}</div>-->
                 <div
-                  style="
+                    style="
                     line-height: 30px;
                     background-color: blue;
                     color: black;
@@ -160,7 +160,7 @@
               <!-- 自己发送的消息-->
               <div v-else style="display: flex; justify-content: flex-end; margin: 20px 0">
                 <div
-                  style="
+                    style="
                     line-height: 30px;
                     background-color: blue;
                     color: black;
@@ -174,9 +174,9 @@
                 <el-popover :width="100" placement="top-start" trigger="hover">
                   <template #reference>
                     <img
-                      :src="currentUser.avatarUrl"
-                      alt=""
-                      style="width: 30px; height: 30px; border-radius: 50%; margin-left: 10px"
+                        :src="currentUser.avatarUrl"
+                        alt=""
+                        style="width: 30px; height: 30px; border-radius: 50%; margin-left: 10px"
                     />
                   </template>
                   <div style="line-height: 20px">
@@ -190,13 +190,13 @@
 
           <div style="margin: 10px 0; width: 100%">
             <V3Emoji
-              v-model="text"
-              :keep="true"
-              :options-name="optionsName"
-              :recent="true"
-              :textArea="true"
-              default-select="recent"
-              size="mid"
+                v-model="text"
+                :keep="true"
+                :options-name="optionsName"
+                :recent="true"
+                :textArea="true"
+                default-select="recent"
+                size="mid"
             />
             <div style="text-align: right">
               <el-button type="primary" @click="send">发送</el-button>
@@ -209,20 +209,17 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, ref } from 'vue'
+import {nextTick, onMounted, ref} from 'vue'
 import V3Emoji from 'vue3-emoji'
 import 'vue3-emoji/dist/style.css'
-import { useAppStoreWithOut } from '../../store/modules/app'
-import { useCache } from '../../hooks/web/useCache'
-import { findAllInitUsingGET } from '../../api/langbei/imController'
+import {useAppStoreWithOut} from '../../store/modules/app'
+import {useCache} from '../../hooks/web/useCache'
 
-import { getPrivateChatUsingPost, getTeamChatUsingPost } from '../../servers/api/chatController'
-import { getUserListByIdsUsingPOST } from '@/api/langbei/userController'
-import { ElMessage } from 'element-plus'
-import ChatMessageVO = API.ChatMessageVO
-import { getMyTeamsUsingGet } from '@/servers/api/teamController'
-import { getMyFriendListUsingGet } from '@/servers/api/friendController'
-import { number } from 'vue-types'
+import {getPrivateChatUsingPost, getTeamChatUsingPost} from '../../servers/api/chatController'
+import {ElMessage} from 'element-plus'
+import {getMyTeamsUsingGet} from '@/servers/api/teamController'
+import {getMyFriendListUsingGet} from '@/servers/api/friendController'
+import ChatMessageVO = API.ChatMessageVO;
 
 //定义消息的类型
 interface ImMessageRequest {
@@ -232,7 +229,7 @@ interface ImMessageRequest {
 
 const messages = ref<API.ChatMessageVO[]>([])
 const appStore = useAppStoreWithOut()
-const { wsCache } = useCache()
+const {wsCache} = useCache()
 const text = ref('') // 聊天输入的内容
 const toChat = ref({
   avatarUrl: '',
@@ -299,7 +296,7 @@ const send = () => {
     return
   }
   if (!text.value.trim()) {
-    ElMessage({ message: '请输入内容', duration: 1000 })
+    ElMessage({message: '请输入内容', duration: 1000})
     return
   } else {
     if (typeof WebSocket == 'undefined') {
@@ -521,27 +518,27 @@ const updateOnlineStatus = async () => {
 
 const getMyTeams = async () => {
   getMyTeamsUsingGet()
-    .then((res) => {
-      console.log('获得我的队伍')
-      teamList.value = res.data
-      // console.log(res.data)
-    })
-    .catch((error) => {
-      ElMessage.error(error)
-    })
+      .then((res) => {
+        console.log('获得我的队伍')
+        teamList.value = res.data
+        // console.log(res.data)
+      })
+      .catch((error) => {
+        ElMessage.error(error)
+      })
 }
 const getMyFriends = async () => {
   getMyFriendListUsingGet()
-    .then((res) => {
-      friendList.value = res.data
-      // console.log(res.data)
-    })
-    .catch((error) => {
-      ElMessage.error(error)
-    })
-    .finally(() => {
-      updateOnlineStatus()
-    })
+      .then((res) => {
+        friendList.value = res.data
+        // console.log(res.data)
+      })
+      .catch((error) => {
+        ElMessage.error(error)
+      })
+      .finally(() => {
+        updateOnlineStatus()
+      })
 }
 
 async function addUserLoginList(messageJson: ImMessageRequest) {

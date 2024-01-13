@@ -108,7 +108,6 @@ import {useAppStoreWithOut} from '../../store/modules/app'
 import {useCache} from '../../hooks/web/useCache'
 import {Search} from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
-import {searchUserUsingPOST} from '@/api/langbei/SearchController'
 // import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
 const loading = ref(false)
