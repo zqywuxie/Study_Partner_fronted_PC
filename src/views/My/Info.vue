@@ -55,6 +55,7 @@
               <div style="flex: 1 1;">
                 基本信息
               </div>
+              <el-button :icon="UserFilled" circle link type="danger" @click="toEdit">修改密码</el-button>
               <el-button :icon="Edit" circle link type="primary" @click="toEdit">修改信息</el-button>
             </div>
           </template>
@@ -177,10 +178,9 @@ import {useAppStoreWithOut} from "../../store/modules/app";
 import {useCache} from "../../hooks/web/useCache";
 import {onMounted, ref} from "vue";
 import moment from "moment";
-import {Edit} from '@element-plus/icons-vue'
+import {Edit, UserFilled} from '@element-plus/icons-vue'
 import {useRouter} from "vue-router";
 import {myCreateTeamsUsingGet, myJoinTeamsUsingGet} from "../../servers/api/teamController";
-import {currentUserUsingGet} from "../../servers/api/userController";
 
 const router = useRouter();
 const appStore = useAppStoreWithOut()

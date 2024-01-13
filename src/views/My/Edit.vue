@@ -76,7 +76,6 @@ import {ref} from "vue";
 import {ElMessage, UploadProps} from 'element-plus'
 import {Plus} from '@element-plus/icons-vue'
 import tags from "@/views/My/tags/tags";
-import {updateUserUsingPOST} from "@/api/langbei/userController";
 import {useRouter} from "vue-router";
 import {PATH_URL} from "@/config/axios";
 

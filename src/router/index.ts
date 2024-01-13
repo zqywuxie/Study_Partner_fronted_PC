@@ -148,6 +148,23 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         ]
     },
     {
+        path: '/shop',
+        component: Layout,
+        name: 'shop',
+        meta: {},
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Shop/ShopList.vue'),
+                name: 'shopList',
+                meta: {
+                    title: '商城',
+                    icon: 'mdi:shop'
+                }
+            },
+        ]
+    },
+    {
         path: '/my',
         component: Layout,
         name: 'my',
