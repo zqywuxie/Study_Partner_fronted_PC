@@ -1,25 +1,45 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useCache} from "@/hooks/web/useCache";
 import {useAppStoreWithOut} from "@/store/modules/app";
 import {CalendarDateType, CalendarInstance} from "element-plus";
 import {Star} from "@element-plus/icons-vue";
+import {listMessageUsingGet} from "@/servers/api/messageController";
+import {getMessageType, MessageTypeEnum} from "../../../types/enum";
+import Highlight from "@/components/Highlight/src/Highlight.vue";
+import MessageVO = API.MessageVO;
 
 const currentUser = ref<API.UserVO>()
 const {wsCache} = useCache()
 const appStore = useAppStoreWithOut()
 currentUser.value = wsCache.get(appStore.getUserInfo)
+const messageList = ref<MessageVO[]>([])
 const loading = ref(false)
 const useTimeAgo = (time: Date | number | string) => {
-  // const localeStore = useLocaleStoreWithOut()
-  //
-  // const currentLocale = computed(() => localeStore.getCurrentLocale)
-  //
-  // const timeAgo = useTimeAgoCore(time, {
-  //   messages: TIME_AGO_MESSAGE_MAP[unref(currentLocale).lang]
-  // })
+  const time1 = new Date(time);
+  const now = new Date();
 
-  return 123
+  const diff = now - time1;
+  const seconds = Math.floor((diff / 1000) % 60);
+  const minutes = Math.floor((diff / 1000 / 60) % 60);
+  const hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+  const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+  let timeAgo;
+
+  if (days > 0) {
+    timeAgo = days + "天前";
+  } else if (hours > 0) {
+    timeAgo = hours + "小时前";
+  } else if (minutes > 0) {
+    timeAgo = minutes + "分钟前";
+  } else if (seconds > 0) {
+    timeAgo = seconds + "秒前";
+  } else {
+    timeAgo = "刚刚";
+  }
+
+  return timeAgo;
 }
 
 const projects = [{}, {}]
@@ -31,6 +51,19 @@ const selectDate = (val: CalendarDateType) => {
   if (!calendar.value) return
   calendar.value.selectDate(val)
 }
+
+const getMessageList = async () => {
+  const res = await listMessageUsingGet({}).then((resp) => {
+    return resp.data
+  })
+  messageList.value = res
+  console.log(res)
+}
+
+onMounted(() => {
+  getMessageList()
+})
+
 </script>
 
 <template>
@@ -140,21 +173,31 @@ const selectDate = (val: CalendarDateType) => {
 
         <!--        动态-->
         <ElSkeleton :loading="loading" animated>
-          <div v-for="(item, index) in dynamics" :key="`dynamics-${index}`">
+          <div v-for="message in messageList">
             <div class="flex items-center">
               <img
-                  src="@/assets/imgs/avatar.jpg"
+                  :src="message.fromUser?.avatarUrl"
                   alt=""
                   class="w-35px h-35px rounded-[50%] mr-20px"
               />
               <div>
                 <div class="text-14px">
+                  <span>{{ message.fromUser.username }}</span>
+                  <span>&nbsp;</span>
                   <Highlight>
-                    推送
+                    {{ getMessageType(message.type) }}
                   </Highlight>
+                  <span>&nbsp;</span>
+                  <div class="ellipsis" v-if="message.type === MessageTypeEnum.BLOG_COMMENT_LIKE">
+                    "{{ message.comment?.content }}"
+                  </div>
+                  <div class="ellipsis"
+                       v-if="message.type === MessageTypeEnum.BLOG_LIKE || message.type === MessageTypeEnum.COMMENT_ADD">
+                    "{{ message.blog?.title }}"
+                  </div>
                 </div>
                 <div class="mt-15px text-12px text-gray-400">
-                  hahah
+                  "{{ useTimeAgo(message.createTime) }}"
                 </div>
               </div>
             </div>
@@ -206,6 +249,14 @@ const selectDate = (val: CalendarDateType) => {
 </template>
 
 <style scoped lang="less">
+.ellipsis {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px; /* 设置你想要的长度 */
+}
+
 .is-selected {
   color: #1989fa;
 }
