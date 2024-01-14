@@ -5,16 +5,16 @@ import '@/plugins/windi.css'
 import '@/plugins/svgIcon'
 
 // 初始化多语言
-import { setupI18n } from '@/plugins/vueI18n'
+import {setupI18n} from '@/plugins/vueI18n'
 
 // 引入状态管理
-import { setupStore } from '@/store'
+import {setupStore} from '@/store'
 
 // 全局组件
-import { setupGlobCom } from '@/components'
+import {setupGlobCom} from '@/components'
 
 // 引入element-plus
-import { setupElementPlus } from '@/plugins/elementPlus'
+import {setupElementPlus} from '@/plugins/elementPlus'
 
 // 引入全局样式
 import '@/styles/index.less'
@@ -23,9 +23,9 @@ import 'element-plus/dist/index.css'
 import '@/plugins/animate.css'
 
 // 路由
-import { setupRouter } from './router'
+import {setupRouter} from './router'
 
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 
 import App from './App.vue'
 
@@ -33,20 +33,23 @@ import './permission'
 import moment from "moment";
 import momentCN from "./plugins/momentCN";
 
+
 const setupAll = async () => {
-  const app = createApp(App)
-  moment.locale('zh-cn', momentCN);
-  await setupI18n(app)
+    const app = createApp(App)
+    moment.locale('zh-cn', momentCN);
+    await setupI18n(app)
 
-  setupStore(app)
+    setupStore(app)
 
-  setupGlobCom(app)
+    setupGlobCom(app)
 
-  setupElementPlus(app)
+    setupElementPlus(app)
 
-  setupRouter(app)
+    setupRouter(app)
 
-  app.mount('#app')
+
+
+    app.mount('#app')
 }
 
 setupAll()

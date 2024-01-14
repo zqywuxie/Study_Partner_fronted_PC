@@ -12,6 +12,7 @@ import highlightKeys from "../../../types/highlightKeys";
 import router from "@/router";
 import {getLikeCountUsingGet} from "@/servers/api/likeController";
 import {CountTo} from "@/components/CountTo";
+import {TodoList} from "@/components/Todo";
 
 const currentUser = ref<API.UserVO>()
 const {wsCache} = useCache()
@@ -81,7 +82,7 @@ const init = async () => {
     return resp.data
   })
 }
-
+const isTodo = ref(false)
 onMounted(() => {
   init()
 })
@@ -154,7 +155,11 @@ onMounted(() => {
         <template #header>
           <div class="flex justify-between">
             <span>你的任务</span>
-            <ElLink type="primary" :underline="false">更多</ElLink>
+            <ElLink type="primary" :underline="false" @click="()=>{isTodo = true}">更多</ElLink>
+
+            <el-dialog v-model="isTodo" title="待办事项">
+              <TodoList></TodoList>
+            </el-dialog>
           </div>
         </template>
         <ElSkeleton :loading="loading" animated>
@@ -171,7 +176,7 @@ onMounted(() => {
             >
               <ElCard shadow="hover">
                 <div class="flex items-center">
-                  <!--                  <Icon :icon="item.icon" :size="25" class="mr-10px"/>-->
+                  <!--<Icon :icon="item.icon" :size="25" class="mr-10px"/>-->
                   <span class="text-16px">OK</span>
                 </div>
                 <div class="mt-15px text-14px text-gray-400">okaaa</div>

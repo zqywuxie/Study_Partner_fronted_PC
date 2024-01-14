@@ -11,6 +11,7 @@
         >
           <el-tab-pane label="随机匹配" name="default"></el-tab-pane>
           <el-tab-pane label="智能匹配" name="match"></el-tab-pane>
+          <el-tab-pane label="附件伙伴" name="map"></el-tab-pane>
         </el-tabs>
       </el-aside>
       <el-container>
@@ -27,9 +28,9 @@
               <el-button type="primary" :icon="Search" @click="doSearch">搜索</el-button>
             </div>
           </div>
-          <div v-else></div>
+          <div v-if="ModeType === 'match'"></div>
         </el-header>
-        <el-skeleton  :loading="loading" animated>
+        <el-skeleton v-if="ModeType === 'match' || ModeType === 'default'" :loading="loading" animated>
           <el-main>
             <el-empty v-if="userList.length === 0" description="找不到符合要求的伙伴噢"/>
             <el-row v-else :gutter="20" class="mb-4">
@@ -78,19 +79,10 @@
               </el-col>
             </el-row>
           </el-main>
-
         </el-skeleton>
-
-        <div style="margin: 0 auto">
-          <el-pagination
-              v-if="ModeType === 'default'"
-              v-model:current-page="pageNum"
-              v-model:page-size="pageSize"
-              :pager-count="11"
-              :total="total"
-              layout="prev, pager, next"
-          />
-        </div>
+        <el-skeleton v-if="ModeType === 'map'" :loading="loading" animated>
+          <BaiduMap/>
+        </el-skeleton>
       </el-container>
     </el-container>
   </div>
@@ -108,6 +100,7 @@ import {useAppStoreWithOut} from '../../store/modules/app'
 import {useCache} from '../../hooks/web/useCache'
 import {Search} from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
+import {BaiduMap} from "@/components/BaiduMap";
 // import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
 const loading = ref(false)

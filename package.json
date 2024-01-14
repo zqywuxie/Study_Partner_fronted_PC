@@ -36,6 +36,7 @@
     "ts:check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@element-plus/icons-vue": "^2.0.10",
     "@iconify/iconify": "^2.2.1",
     "@vueup/vue-quill": "^1.0.0-alpha.40",
@@ -60,6 +61,7 @@
     "scss": "^0.2.4",
     "url": "^0.11.0",
     "vue": "^3.3.0",
+    "vue-amap": "^0.5.10",
     "vue-i18n": "9.1.10",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^4.0.16",
