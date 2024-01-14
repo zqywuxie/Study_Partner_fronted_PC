@@ -122,7 +122,14 @@ export default ({command, mode}: ConfigEnv): UserConfig => {
                     target: 'http://localhost:8081',
                     changeOrigin: true,
                     rewrite: path => path.replace(/^\/api/, '')
-                }
+                },
+                '/ws': {
+                    target: 'https://apis.map.qq.com/',
+                    ws: true,
+                    changeOrigin: true,//允许跨域
+                    rewrite: path => path.replace(/^\/ws/, '/ws')
+                },
+
             },
             hmr: true,
             host: '0.0.0.0'

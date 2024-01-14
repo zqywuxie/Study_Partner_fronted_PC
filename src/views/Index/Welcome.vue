@@ -154,9 +154,8 @@ onMounted(() => {
       <ElCard shadow="never">
         <template #header>
           <div class="flex justify-between">
-            <span>你的任务</span>
+            <span>你的代办事项</span>
             <ElLink type="primary" :underline="false" @click="()=>{isTodo = true}">更多</ElLink>
-
             <el-dialog v-model="isTodo" title="待办事项">
               <TodoList></TodoList>
             </el-dialog>

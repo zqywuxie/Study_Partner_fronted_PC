@@ -32,7 +32,7 @@ import App from './App.vue'
 import './permission'
 import moment from "moment";
 import momentCN from "./plugins/momentCN";
-
+import {VueJsonp} from "vue-jsonp";
 
 const setupAll = async () => {
     const app = createApp(App)
@@ -50,6 +50,7 @@ const setupAll = async () => {
 
 
     app.mount('#app')
+    app.use(VueJsonp)
 }
 
 setupAll()

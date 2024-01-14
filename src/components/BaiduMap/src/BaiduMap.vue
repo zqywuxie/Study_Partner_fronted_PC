@@ -42,10 +42,13 @@
 
 <script>
 import AMapLoader from "@amap/amap-jsapi-loader";
+import {service} from "@/config/axios";
+import axios from "axios";
+import {jsonp} from "vue-jsonp";
 
 window._AMapSecurityConfig = {
   // 安全密钥
-  securityJsCode: "xxxx",
+  securityJsCode: "c9b6e1d81e6815a53d6e984be85fd71c",
 };
 export default {
   name: "TestIndex",
@@ -86,7 +89,7 @@ export default {
     initMap() {
       AMapLoader.load({
         // 你申请的Key
-        key: "xxxx",
+        key: "5290c75860c528fdcc2d0a85f115b605",
         version: "2.0",
         // 需要用到的插件
         plugins: ["AMap.Geocoder", "AMap.AutoComplete"],
@@ -192,9 +195,30 @@ export default {
       // 标记点
       this.setMapMarker();
     },
+
+    currentLocate() {
+      axios({
+        url: "http://localhost:3000/ws/location/v1/ip", //接口地址（代理把起码路径去掉）
+        method: "get", //接口规定，只能用get
+        async: true, //异步
+        params: {key: "WHLBZ-F7DCZ-45NXX-774ZJ-LJTZT-JQBSV", output: "jsonp"}, //参数格式必须用到output传参为jsonp，否则会报跨域问题
+        responseType: "jsonp", //跨域，必须用到jsonp
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,POST',
+        }
+      }).then((res) => {
+        var ip = res.data.replace("QQmap&&QQmap(", "").replace(");", "");
+        this.ipV = JSON.parse(ip);
+        console.log(this.ipV)
+        //   this.initMap();
+      });
+
+    }
   },
   mounted() {
     this.initMap();
+    this.currentLocate();
   },
 };
 </script>

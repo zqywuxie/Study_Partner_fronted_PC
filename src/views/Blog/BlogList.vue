@@ -79,8 +79,6 @@ import {useCache} from '../../hooks/web/useCache'
 import {Edit, Search} from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
 import {matchUsersUsingGet, searchByTextUsingGet} from '@/servers/api/userController'
-// import {} from "@element-plus/icons-vue/dist/types";
-// import {searchUserUsingPOST} from "../../api/langbei/SearchController";
 
 const router = useRouter()
 const blogList = ref([])

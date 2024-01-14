@@ -11,7 +11,7 @@
         >
           <el-tab-pane label="随机匹配" name="default"></el-tab-pane>
           <el-tab-pane label="智能匹配" name="match"></el-tab-pane>
-          <el-tab-pane label="附件伙伴" name="map"></el-tab-pane>
+          <el-tab-pane label="附近伙伴" name="map"></el-tab-pane>
         </el-tabs>
       </el-aside>
       <el-container>
