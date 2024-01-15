@@ -42,7 +42,11 @@
             >
 
             <el-descriptions-item align="left" label="钱包余额:" label-align="right"
-            > <el-tag class="ml-2" type="warning">$ money </el-tag>
+            >
+              <el-tag class="ml-3" type="warning">
+                <Icon icon="f7:money-yen"/>
+                money
+              </el-tag>
             </el-descriptions-item
             >
           </el-descriptions>

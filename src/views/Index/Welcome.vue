@@ -113,6 +113,8 @@ onMounted(() => {
           </ElCol>
           <ElCol :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
             <div class="flex h-70px items-center justify-end lt-sm:mt-20px">
+              <el-badge :value="12" class="item">
+
               <div class="px-8px text-right">
                 <div class="text-14px text-gray-400 mb-20px">点赞数</div>
                 <CountTo
@@ -122,7 +124,10 @@ onMounted(() => {
                     :duration="2600"
                 />
               </div>
+              </el-badge>
+
               <ElDivider direction="vertical"/>
+              <el-badge :value="12" class="item">
               <div class="px-8px text-right">
                 <div class="text-14px text-gray-400 mb-20px">评论数</div>
                 <CountTo
@@ -132,16 +137,25 @@ onMounted(() => {
                     :duration="2600"
                 />
               </div>
+              </el-badge>
+
               <ElDivider direction="vertical" border-style="dashed"/>
+
+              <el-badge :value="12" class="item">
               <div class="px-8px text-right">
-                <div class="text-14px text-gray-400 mb-20px">好友申请</div>
-                <CountTo
-                    class="text-20px"
-                    :start-val="0"
-                    :end-val="123123"
-                    :duration="2600"
-                />
+
+                  <div class="text-14px text-gray-400 mb-20px">好友申请</div>
+
+                  <CountTo
+                      class="text-20px"
+                      :start-val="0"
+                      :end-val="123123"
+                      :duration="2600"
+                  />
+
+
               </div>
+              </el-badge>
             </div>
           </ElCol>
         </ElRow>
@@ -302,6 +316,13 @@ onMounted(() => {
 </template>
 
 <style scoped lang="less">
+.item {
+  margin-top: 10px;
+  //margin-right: 40px;
+}
+
+
+
 .ellipsis {
   display: inline-block;
   white-space: nowrap;

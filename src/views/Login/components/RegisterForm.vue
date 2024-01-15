@@ -9,8 +9,8 @@ import { useAppStore } from '@/store/modules/app'
 import { usePermissionStore } from '@/store/modules/permission'
 import { useRoute, useRouter } from 'vue-router'
 import { getUserByEmailUsingGet, registerUsingPost } from '@/servers/api/userController'
-import { getCaptchaUsingGet1 } from '@/servers/api/mailController'
-import UserLoginRequest = API.UserLoginRequest
+import { getCaptchaUsingGet } from '@/servers/api/mailController'
+import UserLoginRequest = API.LoginRequest
 
 const appStore = useAppStore()
 
@@ -210,7 +210,7 @@ const sendCaptcha = async () => {
         if (res.code !== 0) {
           ElMessage.error('该邮箱已被使用')
         } else {
-          const res = getCaptchaUsingGet1(email) // 获取验证码接口
+          const res = getCaptchaUsingGet(email) // 获取验证码接口
           if (res.code !== 0) {
             ElMessage.error(res.description)
           } else {

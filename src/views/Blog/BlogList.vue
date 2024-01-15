@@ -226,39 +226,41 @@ const toUserInfo = (id) => {
 
 <style>
 
-
 .author-card {
-  width: 300px; /* Adjust based on your design */
-  margin: 20px; /* Adjust based on your design */
+  border: 1px solid #ebeef5;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .author-info {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .author-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
 }
 
 .author-details {
-  p {
-    margin: 0;
-    font-weight: bold;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .author-bio {
-  margin-bottom: 10px;
+  padding: 0 20px;
+  margin-top: 20px;
 }
+
+
 
 .author-stats {
   display: flex;
   justify-content: space-between;
+  padding: 20px;
+  //background-color: #f9fafc;
 }
 
 .stat-item {
@@ -267,11 +269,16 @@ const toUserInfo = (id) => {
   text-align: center;
 }
 
+
+
 .stat-label {
-  color: #888;
+  margin-right: 5px;
 }
 
 .stat-value {
+  display: block;
+  font-size: 19px;
   font-weight: bold;
+  margin-top: 5px;
 }
 </style>
