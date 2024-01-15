@@ -19,8 +19,8 @@
     <el-row>
       <el-col :span="18">
         <el-main>
-          <el-empty v-if="blogList.length === 0" description="暂无博客"/>
-          <blogCard :blog-list="blogList"/>
+          <el-empty v-if="goodList.length === 0" description="暂无博客"/>
+          <shop-card :shop-list="goodList"/>
         </el-main>
       </el-col>
       <el-col :span="6">
@@ -53,7 +53,7 @@
             <div class="stat-item">
               <i class="el-icon-shopping-cart-full stat-icon"></i>
               <span class="stat-label">购物车:</span>
-              <el-link type="primary" class="stat-value" :underline="false" >
+              <el-link type="primary" class="stat-value" :underline="false">
                 123
               </el-link>
 
@@ -86,22 +86,18 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
-import blogCard from '@/components/BlogCard/blog_list.vue'
 // todo 添加一个关键词搜索博文
-import {listBlogPageUsingPost} from '../../servers/api/blogController'
-
 import {useAppStoreWithOut} from '../../store/modules/app'
 import {useCache} from '../../hooks/web/useCache'
 import {Edit, Search} from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
-import {matchUsersUsingGet, searchByTextUsingGet} from '@/servers/api/userController'
+import ShopCard from "@/components/ShopCard/src/ShopCard.vue";
 
 const router = useRouter()
-const blogList = ref([])
+const goodList = ref([])
 const pageNum = ref(1)
 const pageSize = ref(12)
 const total = ref()
-const ModeType = ref('default')
 const appStore = useAppStoreWithOut()
 const {wsCache} = useCache()
 const currentUser = ref()
@@ -115,14 +111,14 @@ onMounted(async () => {
 })
 
 //获取推荐用户
-async function getBlogList() {
+async function getGoodList() {
   const res = await listBlogPageUsingPost({
     pageNum: pageNum.value,
     pageSize: pageSize.value,
     searchText: searchText.value
   })
   total.value = res.data.total
-  blogList.value = res.data.records.map((blog) => {
+  goodList.value = res.data.records.map((blog) => {
     // 使用 split 将逗号分隔的字符串转换为数组
     let imagesArray = ''
     if (blog.images) {
@@ -151,26 +147,10 @@ async function searchBlogPage() {
         user.tags = JSON.parse(user.tags)
       }
     })
-    blogList.value = userListData
+    goodList.value = userListData
   }
 }
 
-//分页查询用户
-// async function searchUserByEs() {
-//   const res = await searchUserUsingPOST({
-//     searchText: searchText.value,
-//   })
-//   // console.log(res);
-//   const userListData = res.data
-//   if (userListData) {
-//     userListData.forEach(user => {
-//       if (user.tags) {
-//         user.tags = JSON.parse(user.tags);
-//       }
-//     })
-//     blogList.value = userListData;
-//   }
-// }
 
 //监听页数变化
 watch(pageNum, (newVal, oldVal) => {
@@ -186,56 +166,12 @@ const doSearch = async () => {
   }
 }
 
-//
-
-const createBlog = () => {
-  router.push({
-    path: '/blog/edit'
-  })
-}
-
-//心动匹配模式获取用户
-async function matchUser() {
-  const res = await matchUsersUsingGet({
-    num: 10
-  })
-  const userListData = res.data
-  if (userListData) {
-    userListData.forEach((user) => {
-      if (user.tags) {
-        user.tags = JSON.parse(user.tags)
-      }
-    })
-    blogList.value = userListData
-  }
-}
-
-//切换模式
-const modeChange = async () => {
-  // console.log(ModeType.value);
-  if (ModeType.value === 'default') {
-    if (searchText.value === '') {
-      await getBlogList()
-    } else {
-      await searchBlogPage()
-    }
-  } else if (ModeType.value === 'match') {
-    await matchUser()
-  }
-}
 
 //点击卡片到用户详情页
-const toBlogInfo = (id) => {
+const toGoodInfo = (id) => {
   router.push({
-    path: '/blog/info',
-    query: {blogId: id}
-  })
-}
-
-const toUserInfo = (id) => {
-  router.push({
-    path: '/user/info',
-    query: {id: id}
+    path: '/good/info',
+    query: {goodId: id}
   })
 }
 </script>
