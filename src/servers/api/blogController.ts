@@ -1,5 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
+
 import {service} from "@/config/axios";
 /** 通过id获取博客 GET /api/blog/${param0} */
 export async function getBlogByIdUsingGet(

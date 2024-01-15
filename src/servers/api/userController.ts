@@ -1,7 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
-
 import {service} from "@/config/axios";
+
 
 /** 校验验证码 GET /api/user/check */
 export async function checkCodeUsingGet(
@@ -187,13 +187,16 @@ export async function searchUsersByTagsUsingGet(
 }
 
 /** searchByText GET /api/user/searchByText */
-export async function searchByTextUsingGet(body: API.UserDTO, options?: { [key: string]: any }) {
+export async function searchByTextUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.searchByTextUsingGETParams,
+  options?: { [key: string]: any },
+) {
   return service('/api/user/searchByText', {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
+    params: {
+      ...params,
     },
-    data: body,
     ...(options || {}),
   });
 }

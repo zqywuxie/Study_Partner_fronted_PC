@@ -19,7 +19,7 @@
     <el-row>
       <el-col :span="18">
         <el-main>
-          <el-empty v-if="goodList.length === 0" description="暂无博客"/>
+<!--          <el-empty v-if="goodList.length === 0" description="暂无商品"/>-->
           <shop-card :shop-list="goodList"/>
         </el-main>
       </el-col>
@@ -73,7 +73,6 @@
 
     <div style="margin: 0 auto">
       <el-pagination
-          v-if="ModeType === 'default'"
           v-model:current-page="pageNum"
           v-model:page-size="pageSize"
           :pager-count="11"
@@ -155,7 +154,6 @@ async function searchBlogPage() {
 //监听页数变化
 watch(pageNum, (newVal, oldVal) => {
   searchBlogPage()
-  console.log()
 })
 
 //搜索用户

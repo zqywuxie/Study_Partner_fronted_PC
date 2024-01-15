@@ -9,10 +9,12 @@ import * as commentsController from './commentsController';
 import * as ossController from './ossController';
 import * as followController from './followController';
 import * as friendController from './friendController';
+import * as goodController from './goodController';
 import * as likeController from './likeController';
 import * as userLocationController from './userLocationController';
 import * as mailController from './mailController';
 import * as messageController from './messageController';
+import * as orderController from './orderController';
 import * as teamController from './teamController';
 import * as userController from './userController';
 export default {
@@ -23,10 +25,12 @@ export default {
   ossController,
   followController,
   friendController,
+  goodController,
   likeController,
   userLocationController,
   mailController,
   messageController,
+  orderController,
   teamController,
   userController,
 };

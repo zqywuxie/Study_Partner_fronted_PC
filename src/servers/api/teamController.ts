@@ -1,7 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
-
 import {service} from "@/config/axios";
+
 
 /** add POST /api/team/add */
 export async function addUsingPost(body: API.TeamAddRequest, options?: { [key: string]: any }) {

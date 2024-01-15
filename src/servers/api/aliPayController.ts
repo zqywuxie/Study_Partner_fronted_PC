@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import {service} from "@/config/axios";
+
 /** aliPayNotify POST /api/ali/notify */
 export async function aliPayNotifyUsingPost(options?: { [key: string]: any }) {
   return service('/api/ali/notify', {

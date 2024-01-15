@@ -2,6 +2,7 @@
 /* eslint-disable */
 import {service} from "@/config/axios";
 
+
 /** 关注用户 POST /api/follow/${param0} */
 export async function followUserUsingPost(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

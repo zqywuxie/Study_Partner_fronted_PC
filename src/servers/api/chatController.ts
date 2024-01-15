@@ -1,6 +1,5 @@
 // @ts-ignore
 /* eslint-disable */
-
 import {service} from "@/config/axios";
 /** 获取大厅聊天 GET /api/chat/hallChat */
 export async function getHallChatUsingGet(options?: { [key: string]: any }) {

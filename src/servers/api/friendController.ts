@@ -1,7 +1,8 @@
 // @ts-ignore
 /* eslint-disable */
-
 import {service} from "@/config/axios";
+
+
 /** 添加好友 POST /api/friends/add */
 export async function addFriendRecordsUsingPost(
   body: API.FriendAddRequest,

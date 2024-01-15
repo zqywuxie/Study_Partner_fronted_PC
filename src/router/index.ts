@@ -165,6 +165,14 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         ]
     },
     {
+        name: 'order',
+        path: '/order',
+        component: ()=>import("@/views/Order/OrderCreate.vue"),
+        meta: {
+            hidden: true
+        },
+    },
+    {
         path: '/my',
         component: Layout,
         name: 'my',

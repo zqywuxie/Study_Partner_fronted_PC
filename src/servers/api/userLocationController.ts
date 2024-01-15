@@ -1,6 +1,16 @@
 // @ts-ignore
 /* eslint-disable */
 import {service} from "@/config/axios";
+
+
+/** getLocation GET /api/location/get */
+export async function getLocationUsingGet(options?: { [key: string]: any }) {
+  return service('/api/location/get', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** loadData POST /api/location/load */
 export async function loadDataUsingPost(options?: { [key: string]: any }) {
   return service('/api/location/load', {

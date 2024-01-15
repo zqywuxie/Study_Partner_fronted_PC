@@ -8,7 +8,12 @@ declare namespace API {
     title?: string;
   };
 
-  type AdInfo = true;
+  type AdInfo = {
+    city?: string;
+    district?: string;
+    nation?: string;
+    province?: string;
+  };
 
   type agreeToApplyUsingPOSTParams = {
     /** fromId */
@@ -130,6 +135,16 @@ declare namespace API {
     message?: string;
   };
 
+  type CommonResultGoods_ = {
+    /** 响应码 */
+    code?: number;
+    data?: Goods;
+    /** 响应描述 */
+    description?: string;
+    /** 响应信息 */
+    message?: string;
+  };
+
   type CommonResultInt_ = {
     /** 响应码 */
     code?: number;
@@ -240,10 +255,30 @@ declare namespace API {
     message?: string;
   };
 
+  type CommonResultOrders_ = {
+    /** 响应码 */
+    code?: number;
+    data?: Orders;
+    /** 响应描述 */
+    description?: string;
+    /** 响应信息 */
+    message?: string;
+  };
+
   type CommonResultPageBlogVO_ = {
     /** 响应码 */
     code?: number;
     data?: PageBlogVO_;
+    /** 响应描述 */
+    description?: string;
+    /** 响应信息 */
+    message?: string;
+  };
+
+  type CommonResultPageGoods_ = {
+    /** 响应码 */
+    code?: number;
+    data?: PageGoods_;
     /** 响应描述 */
     description?: string;
     /** 响应信息 */
@@ -295,6 +330,16 @@ declare namespace API {
     /** 响应码 */
     code?: number;
     data?: User;
+    /** 响应描述 */
+    description?: string;
+    /** 响应信息 */
+    message?: string;
+  };
+
+  type CommonResultUserLocationVO_ = {
+    /** 响应码 */
+    code?: number;
+    data?: UserLocationVO;
     /** 响应描述 */
     description?: string;
     /** 响应信息 */
@@ -355,6 +400,36 @@ declare namespace API {
     blogId: string;
   };
 
+  type getByIdUsingDELETEParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getByIdUsingGET1Params = {
+    /** orderId */
+    orderId: string;
+  };
+
+  type getByIdUsingGETParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getByIdUsingPATCHParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getByIdUsingPOSTParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getByIdUsingPUTParams = {
+    /** id */
+    id?: number;
+  };
+
   type getCaptchaFromRedisUsingGETParams = {
     /** email */
     email: string;
@@ -380,6 +455,18 @@ declare namespace API {
     type: string;
   };
 
+  type Goods = {
+    cover?: string;
+    /** 是否删除 设置逻辑删除 */
+    deleted?: number;
+    description?: string;
+    id?: number;
+    name?: string;
+    num?: number;
+    price?: number;
+    score?: number;
+  };
+
   type likeBlogUsingPUTParams = {
     /** id */
     id: string;
@@ -400,7 +487,15 @@ declare namespace API {
     currentPage?: string;
   };
 
-  type Location = true;
+  type listUsingGETParams = {
+    /** goodsDTO */
+    goodsDTO: string;
+  };
+
+  type Location = {
+    lat?: number;
+    lng?: number;
+  };
 
   type LoginByEmailRequest = {
     /** 验证码 */
@@ -503,9 +598,26 @@ declare namespace API {
     y?: number;
   };
 
+  type OrderAddRequest = {
+    goodsId?: string;
+    userId?: string;
+  };
+
   type OrderItem = {
     asc?: boolean;
     column?: string;
+  };
+
+  type Orders = {
+    createTime?: string;
+    /** 是否删除 设置逻辑删除 */
+    deleted?: number;
+    goodsId?: string;
+    id?: string;
+    orderId?: string;
+    price?: number;
+    status?: number;
+    uid?: string;
   };
 
   type PageBlogVO_ = {
@@ -516,6 +628,19 @@ declare namespace API {
     orders?: OrderItem[];
     pages?: string;
     records?: BlogVO[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
+  type PageGoods_ = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: Goods[];
     searchCount?: boolean;
     size?: string;
     total?: string;
@@ -568,6 +693,13 @@ declare namespace API {
     pageSize: string;
   };
 
+  type reduceStockUsingPOSTParams = {
+    /** amount */
+    amount?: number;
+    /** id */
+    id?: string;
+  };
+
   type RegisterRequest = {
     /** 头像地址 */
     avatarUrl?: string;
@@ -613,6 +745,11 @@ declare namespace API {
     'userVO.updateTime'?: string;
     'userVO.useraccount'?: string;
     'userVO.username'?: string;
+  };
+
+  type searchByTextUsingGETParams = {
+    /** userDTO */
+    userDTO: string;
   };
 
   type searchTeamByIDUsingGETParams = {
@@ -743,12 +880,6 @@ declare namespace API {
     useraccount?: string;
     /** 用户昵称 */
     username?: string;
-  };
-
-  type UserDTO = {
-    pageNum?: number;
-    pageSize?: number;
-    searchText?: string;
   };
 
   type UserLocationRequest = {
