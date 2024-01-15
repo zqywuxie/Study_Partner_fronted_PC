@@ -1,0 +1,20 @@
+{
+  "status": 0,
+  "message": "Success",
+  "request_id": "b27b9cdb4c0a436690a5e169205068b8",
+  "result": {
+    "ip": "2001:da8:600c:8000::175:941e",
+    "location": {
+      "lat": 30.55663,
+      "lng": 104.27471
+    },
+    "ad_info": {
+      "nation": "中国",
+      "province": "四川省",
+      "city": "成都市",
+      "district": "龙泉驿区",
+      "adcode": 510112,
+      "nation_code": 156
+    }
+  }
+}

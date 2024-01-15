@@ -1,787 +1,812 @@
 declare namespace API {
   type addBlogUsingPOSTParams = {
     /** 正文 */
-    content?: string
+    content?: string;
     /** 图片 */
-    images?: string[]
+    images?: string[];
     /** 标题 */
-    title?: string
-  }
+    title?: string;
+  };
+
+  type AdInfo = true;
 
   type agreeToApplyUsingPOSTParams = {
     /** fromId */
-    fromId: string
-  }
+    fromId: string;
+  };
 
   type BlogDTO = {
-    pageNum?: number
-    pageSize?: number
-    searchText?: string
-  }
+    pageNum?: number;
+    pageSize?: number;
+    searchText?: string;
+  };
 
   type BlogVO = {
-    author?: UserVO
-    commentsNum?: number
-    content?: string
+    author?: UserVO;
+    commentsNum?: number;
+    content?: string;
     /** 封面图片 */
-    coverImage?: string
-    createTime?: string
-    id?: string
-    images?: string
+    coverImage?: string;
+    createTime?: string;
+    id?: string;
+    images?: string;
     /** 是否删除 设置逻辑删除 */
-    isDelete?: number
+    isDelete?: number;
     /** 是否点赞 */
-    isLike?: boolean
-    likedNum?: number
-    title?: string
-    updateTime?: string
-    userId?: string
-  }
+    isLike?: boolean;
+    likedNum?: number;
+    title?: string;
+    updateTime?: string;
+    userId?: string;
+  };
 
   type canceledApplyUsingPOSTParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type ChatMessageVO = {
     /** 聊天类型 */
-    chatType?: number
+    chatType?: number;
     /** 创建时间 */
-    createTime?: string
-    fromUser?: WebSocketVO
+    createTime?: string;
+    fromUser?: WebSocketVO;
     /** 是否为管理员 */
-    isAdmin?: boolean
+    isAdmin?: boolean;
     /** 是否是我的消息 */
-    isMy?: boolean
+    isMy?: boolean;
     /** 队伍id */
-    teamId?: string
+    teamId?: string;
     /** 正文 */
-    text?: string
-    toUser?: WebSocketVO
-  }
+    text?: string;
+    toUser?: WebSocketVO;
+  };
 
   type ChatRequest = {
-    formId?: string
-    teamId?: string
-    toId?: string
-  }
+    formId?: string;
+    teamId?: string;
+    toId?: string;
+  };
 
   type checkCodeUsingGETParams = {
     /** 验证码 */
-    code?: string
+    code?: string;
     /** 手机号 */
-    phone?: string
-  }
+    phone?: string;
+  };
 
   type CommentsAddRequest = {
-    blogId?: string
-    content?: string
-    parentCommentId?: number
-  }
+    blogId?: string;
+    content?: string;
+    parentCommentId?: number;
+  };
 
   type CommentsVO = {
-    blogId?: string
-    blogVO?: BlogVO
-    childCommentId?: number
-    commentUser?: UserVO
-    content?: string
-    createTime?: string
-    id?: string
+    blogId?: string;
+    blogVO?: BlogVO;
+    childCommentId?: number;
+    commentUser?: UserVO;
+    content?: string;
+    createTime?: string;
+    id?: string;
     /** 是否删除 设置逻辑删除 */
-    isDelete?: number
-    isLiked?: boolean
-    likedNum?: number
-    parentCommentId?: number
-    status?: number
-    updateTime?: string
-    userId?: string
-  }
+    isDelete?: number;
+    isLiked?: boolean;
+    likedNum?: number;
+    parentCommentId?: number;
+    status?: number;
+    updateTime?: string;
+    userId?: string;
+  };
 
   type CommonResultBlogVO_ = {
     /** 响应码 */
-    code?: number
-    data?: BlogVO
+    code?: number;
+    data?: BlogVO;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultBoolean_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: boolean
+    data?: boolean;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultCommentsVO_ = {
     /** 响应码 */
-    code?: number
-    data?: CommentsVO
+    code?: number;
+    data?: CommentsVO;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultInt_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: number
+    data?: number;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListChatMessageVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: ChatMessageVO[]
+    data?: ChatMessageVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListCommentsVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: CommentsVO[]
+    data?: CommentsVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListFriendsRecordVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: FriendsRecordVO[]
+    data?: FriendsRecordVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListMessageVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: MessageVO[]
+    data?: MessageVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListTeamUserVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: TeamUserVO[]
+    data?: TeamUserVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultListUser_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: User[]
+    data?: User[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
+
+  type CommonResultListUserLocationVO_ = {
+    /** 响应码 */
+    code?: number;
+    /** 响应数据 */
+    data?: UserLocationVO[];
+    /** 响应描述 */
+    description?: string;
+    /** 响应信息 */
+    message?: string;
+  };
 
   type CommonResultListUserVO_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: UserVO[]
+    data?: UserVO[];
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultLong_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: string
+    data?: string;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultPageBlogVO_ = {
     /** 响应码 */
-    code?: number
-    data?: PageBlogVO_
+    code?: number;
+    data?: PageBlogVO_;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
-  type CommonResultPageTeam_ = {
+  type CommonResultPageTeamUserVO_ = {
     /** 响应码 */
-    code?: number
-    data?: PageTeam_
+    code?: number;
+    data?: PageTeamUserVO_;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultPageUser_ = {
     /** 响应码 */
-    code?: number
-    data?: PageUser_
+    code?: number;
+    data?: PageUser_;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultString_ = {
     /** 响应码 */
-    code?: number
+    code?: number;
     /** 响应数据 */
-    data?: string
+    data?: string;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultTeamUserVO_ = {
     /** 响应码 */
-    code?: number
-    data?: TeamUserVO
+    code?: number;
+    data?: TeamUserVO;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultUser_ = {
     /** 响应码 */
-    code?: number
-    data?: User
+    code?: number;
+    data?: User;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type CommonResultUserVO_ = {
     /** 响应码 */
-    code?: number
-    data?: UserVO
+    code?: number;
+    data?: UserVO;
     /** 响应描述 */
-    description?: string
+    description?: string;
     /** 响应信息 */
-    message?: string
-  }
+    message?: string;
+  };
 
   type deleteBlogByIdUsingDELETEParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type deleteBlogCommentUsingDELETEParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type deleteFriendRecordsUsingGETParams = {
     /** friendId */
-    friendId: string
-  }
+    friendId: string;
+  };
 
   type followUserUsingPOSTParams = {
     /** followerId */
-    followerId: string
-  }
+    followerId: string;
+  };
 
   type FriendAddRequest = {
     /** id */
-    id?: string
+    id?: string;
     /** 接收申请的用户id */
-    receiveId?: string
+    receiveId?: string;
     /** 好友申请备注信息 */
-    remark?: string
-  }
+    remark?: string;
+  };
 
   type FriendsRecordVO = {
-    applyUser?: UserVO
+    applyUser?: UserVO;
     /** 申请时间 */
-    createTime?: string
+    createTime?: string;
     /** 好友申请备注信息 */
-    remark?: string
+    remark?: string;
     /** 申请状态 */
-    status?: number
-  }
+    status?: number;
+  };
 
   type getBlogByIdUsingGETParams = {
     /** blogId */
-    blogId: string
-  }
+    blogId: string;
+  };
 
   type getCaptchaFromRedisUsingGETParams = {
     /** email */
-    email: string
-  }
+    email: string;
+  };
 
-  type getCaptchaUsingGET1Params = {
+  type getCaptchaUsingGETParams = {
     /** email */
-    email: string
-  }
+    email: string;
+  };
 
   type getCommentByIdUsingGETParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type getUserBlogMessageUsingGETParams = {
     /** type */
-    type: string
-  }
+    type: string;
+  };
 
   type getUserMessageNumUsingGETParams = {
     /** type */
-    type: string
-  }
+    type: string;
+  };
 
   type likeBlogUsingPUTParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type likeCommentUsingPUTParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type listBlogCommentsUsingGETParams = {
     /** blogId */
-    blogId: string
-  }
+    blogId: string;
+  };
 
   type listMyBlogsUsingGETParams = {
     /** currentPage */
-    currentPage?: string
-  }
+    currentPage?: string;
+  };
+
+  type Location = true;
 
   type LoginByEmailRequest = {
     /** 验证码 */
-    captcha?: string
+    captcha?: string;
     /** 用户邮箱 */
-    email?: string
-  }
+    email?: string;
+  };
 
   type LoginRequest = {
     /** 用户密码 */
-    password?: string
+    password?: string;
     /** 用户账号 */
-    useraccount?: string
-  }
+    useraccount?: string;
+  };
 
   type matchUsersUsingGETParams = {
     /** num */
-    num?: string
-  }
+    num?: string;
+  };
 
   type MessageVO = {
-    blog?: BlogVO
-    comment?: CommentsVO
-    createTime?: string
-    data?: string
-    friendsRecordVO?: FriendsRecordVO
-    fromId?: string
-    fromUser?: UserVO
-    id?: string
+    blog?: BlogVO;
+    comment?: CommentsVO;
+    createTime?: string;
+    data?: string;
+    friendsRecordVO?: FriendsRecordVO;
+    fromId?: string;
+    fromUser?: UserVO;
+    id?: string;
     /** 是否删除 设置逻辑删除 */
-    isDelete?: number
-    isRead?: number
-    toId?: string
-    type?: number
-    updateTime?: string
-  }
+    isDelete?: number;
+    isRead?: number;
+    toId?: string;
+    type?: number;
+    updateTime?: string;
+  };
 
   type myCreateTeamsUsingGETParams = {
     /** 是否关注 */
-    'userVO.isFollow'?: boolean
+    'userVO.isFollow'?: boolean;
     /** 是否关注 */
-    'userVO.isFriend'?: boolean
-    description?: string
-    id?: string
-    idList?: string[]
-    joinId?: string
-    maxNum?: number
-    name?: string
-    pageNum?: number
-    pageSize?: number
-    searchText?: string
-    status?: number
-    userId?: string
-    'userVO.avatarUrl'?: string
-    'userVO.createTime'?: string
-    'userVO.email'?: string
-    'userVO.gender'?: number
-    'userVO.id'?: string
-    'userVO.phone'?: string
-    'userVO.profile'?: string
-    'userVO.status'?: number
-    'userVO.tags'?: string
-    'userVO.updateTime'?: string
-    'userVO.useraccount'?: string
-    'userVO.username'?: string
-  }
+    'userVO.isFriend'?: boolean;
+    description?: string;
+    id?: string;
+    idList?: string[];
+    joinId?: string;
+    maxNum?: number;
+    name?: string;
+    pageNum?: number;
+    pageSize?: number;
+    searchText?: string;
+    status?: number;
+    userId?: string;
+    'userVO.avatarUrl'?: string;
+    'userVO.createTime'?: string;
+    'userVO.email'?: string;
+    'userVO.gender'?: number;
+    'userVO.id'?: string;
+    'userVO.phone'?: string;
+    'userVO.profile'?: string;
+    'userVO.status'?: number;
+    'userVO.tags'?: string;
+    'userVO.updateTime'?: string;
+    'userVO.useraccount'?: string;
+    'userVO.username'?: string;
+  };
 
   type myJoinTeamsUsingGETParams = {
     /** 是否关注 */
-    'userVO.isFollow'?: boolean
+    'userVO.isFollow'?: boolean;
     /** 是否关注 */
-    'userVO.isFriend'?: boolean
-    description?: string
-    id?: string
-    idList?: string[]
-    joinId?: string
-    maxNum?: number
-    name?: string
-    pageNum?: number
-    pageSize?: number
-    searchText?: string
-    status?: number
-    userId?: string
-    'userVO.avatarUrl'?: string
-    'userVO.createTime'?: string
-    'userVO.email'?: string
-    'userVO.gender'?: number
-    'userVO.id'?: string
-    'userVO.phone'?: string
-    'userVO.profile'?: string
-    'userVO.status'?: number
-    'userVO.tags'?: string
-    'userVO.updateTime'?: string
-    'userVO.useraccount'?: string
-    'userVO.username'?: string
-  }
+    'userVO.isFriend'?: boolean;
+    description?: string;
+    id?: string;
+    idList?: string[];
+    joinId?: string;
+    maxNum?: number;
+    name?: string;
+    pageNum?: number;
+    pageSize?: number;
+    searchText?: string;
+    status?: number;
+    userId?: string;
+    'userVO.avatarUrl'?: string;
+    'userVO.createTime'?: string;
+    'userVO.email'?: string;
+    'userVO.gender'?: number;
+    'userVO.id'?: string;
+    'userVO.phone'?: string;
+    'userVO.profile'?: string;
+    'userVO.status'?: number;
+    'userVO.tags'?: string;
+    'userVO.updateTime'?: string;
+    'userVO.useraccount'?: string;
+    'userVO.username'?: string;
+  };
+
+  type nearbyPartnersUsingGETParams = {
+    x?: number;
+    y?: number;
+  };
 
   type OrderItem = {
-    asc?: boolean
-    column?: string
-  }
+    asc?: boolean;
+    column?: string;
+  };
 
   type PageBlogVO_ = {
-    countId?: string
-    current?: string
-    maxLimit?: string
-    optimizeCountSql?: boolean
-    orders?: OrderItem[]
-    pages?: string
-    records?: BlogVO[]
-    searchCount?: boolean
-    size?: string
-    total?: string
-  }
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: BlogVO[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
 
-  type PageTeam_ = {
-    countId?: string
-    current?: string
-    maxLimit?: string
-    optimizeCountSql?: boolean
-    orders?: OrderItem[]
-    pages?: string
-    records?: Team[]
-    searchCount?: boolean
-    size?: string
-    total?: string
-  }
+  type PageTeamUserVO_ = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: TeamUserVO[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
 
   type PageUser_ = {
-    countId?: string
-    current?: string
-    maxLimit?: string
-    optimizeCountSql?: boolean
-    orders?: OrderItem[]
-    pages?: string
-    records?: User[]
-    searchCount?: boolean
-    size?: string
-    total?: string
-  }
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: User[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
+  type payOrderUsingGETParams = {
+    /** orderId */
+    orderId?: string;
+    /** price */
+    price?: string;
+    /** subject */
+    subject?: string;
+  };
 
   type readMessageUsingGETParams = {
     /** type */
-    type: string
-  }
+    type: string;
+  };
 
   type recommendUsingGETParams = {
     /** currentPage */
-    currentPage: string
+    currentPage: string;
     /** pageSize */
-    pageSize: string
-  }
+    pageSize: string;
+  };
 
   type RegisterRequest = {
     /** 头像地址 */
-    avatarUrl?: string
+    avatarUrl?: string;
     /** 验证码 */
-    captcha?: string
+    captcha?: string;
     /** 核实密码 */
-    checkPassword?: string
+    checkPassword?: string;
     /** 邮箱 */
-    email?: string
+    email?: string;
     /** 用户密码 */
-    password?: string
+    password?: string;
     /** 用户名 */
-    userName?: string
+    userName?: string;
     /** 用户账号 */
-    useraccount?: string
-  }
+    useraccount?: string;
+  };
 
   type searchAllByPageUsingGETParams = {
     /** 是否关注 */
-    'userVO.isFollow'?: boolean
+    'userVO.isFollow'?: boolean;
     /** 是否关注 */
-    'userVO.isFriend'?: boolean
-    description?: string
-    id?: string
-    idList?: string[]
-    joinId?: string
-    maxNum?: number
-    name?: string
-    pageNum?: number
-    pageSize?: number
-    searchText?: string
-    status?: number
-    userId?: string
-    'userVO.avatarUrl'?: string
-    'userVO.createTime'?: string
-    'userVO.email'?: string
-    'userVO.gender'?: number
-    'userVO.id'?: string
-    'userVO.phone'?: string
-    'userVO.profile'?: string
-    'userVO.status'?: number
-    'userVO.tags'?: string
-    'userVO.updateTime'?: string
-    'userVO.useraccount'?: string
-    'userVO.username'?: string
-  }
+    'userVO.isFriend'?: boolean;
+    description?: string;
+    id?: string;
+    idList?: string[];
+    joinId?: string;
+    maxNum?: number;
+    name?: string;
+    pageNum?: number;
+    pageSize?: number;
+    searchText?: string;
+    status?: number;
+    userId?: string;
+    'userVO.avatarUrl'?: string;
+    'userVO.createTime'?: string;
+    'userVO.email'?: string;
+    'userVO.gender'?: number;
+    'userVO.id'?: string;
+    'userVO.phone'?: string;
+    'userVO.profile'?: string;
+    'userVO.status'?: number;
+    'userVO.tags'?: string;
+    'userVO.updateTime'?: string;
+    'userVO.useraccount'?: string;
+    'userVO.username'?: string;
+  };
 
   type searchTeamByIDUsingGETParams = {
     /** id */
-    id?: string
-  }
+    id?: string;
+  };
 
   type searchUserByIdUsingGETParams = {
     /** id */
-    id: string
-  }
+    id: string;
+  };
 
   type searchUsersByTagsUsingGETParams = {
     /** tags */
-    tags?: string[]
-  }
-
-  type Team = {
-    /** 用户头像 */
-    avatarUrl?: string
-    createTime?: string
-    description?: string
-    expireTime?: string
-    id?: string
-    /** 是否删除 设置逻辑删除 */
-    isDelete?: number
-    maxNum?: number
-    name?: string
-    password?: string
-    status?: number
-    updateTime?: string
-    userId?: string
-  }
+    tags?: string[];
+  };
 
   type TeamAddRequest = {
-    avatarUrl?: string
-    description?: string
-    expireTime?: string
-    maxNum?: number
-    name?: string
-    password?: string
-    status?: number
-    userId?: string
-  }
+    avatarUrl?: string;
+    description?: string;
+    expireTime?: string;
+    maxNum?: number;
+    name?: string;
+    password?: string;
+    status?: number;
+    userId?: string;
+  };
 
   type TeamDeleteRequest = {
-    teamId?: string
-  }
+    teamId?: string;
+  };
 
   type TeamJoinRequest = {
-    password?: string
-    teamId?: string
-  }
+    password?: string;
+    teamId?: string;
+  };
 
   type TeamQuitRequest = {
-    teamId?: string
-  }
+    teamId?: string;
+  };
 
   type TeamUpdateRequest = {
-    description?: string
-    expireTime?: string
-    id?: string
-    name?: string
-    password?: string
-    status?: number
-  }
+    description?: string;
+    expireTime?: string;
+    id?: string;
+    name?: string;
+    password?: string;
+    status?: number;
+  };
 
   type TeamUserVO = {
-    avatarUrl?: string
-    createTime?: string
-    description?: string
-    expireTime?: string
-    hasJoin?: boolean
-    hasJoinNum?: number
-    id?: string
-    joinUserList?: UserVO[]
-    manageUserList?: UserVO[]
-    maxNum?: number
-    name?: string
-    status?: number
-    updateTime?: string
-    userId?: string
-  }
+    avatarUrl?: string;
+    createTime?: string;
+    description?: string;
+    expireTime?: string;
+    hasJoin?: boolean;
+    hasJoinNum?: number;
+    id?: string;
+    joinUserList?: UserVO[];
+    manageUserList?: UserVO[];
+    maxNum?: number;
+    name?: string;
+    status?: number;
+    updateTime?: string;
+    userId?: string;
+  };
 
   type toReadUsingGETParams = {
     /** ids */
-    ids?: string[]
-  }
+    ids?: string[];
+  };
 
   type updateBlogUsingPUTParams = {
     /** 正文 */
-    content?: string
+    content?: string;
     /** id */
-    id?: string
+    id?: string;
     /** 未上传的图片 */
-    images?: string[]
+    images?: string[];
     /** 已上传的图片 */
-    imgStr?: string
+    imgStr?: string;
     /** 标题 */
-    title?: string
-  }
+    title?: string;
+  };
 
   type UpdatePasswordRequest = {
     /** 邮箱 */
-    email?: string
+    email?: string;
     /** 密码 */
-    password?: string
-  }
+    password?: string;
+  };
 
   type uploadOssFileUsingPOSTParams = {
     /** type */
-    type?: string
+    type?: string;
     /** useraccount */
-    useraccount?: string
-  }
+    useraccount?: string;
+  };
 
   type User = {
     /** 用户头像 */
-    avatarUrl?: string
+    avatarUrl?: string;
     /** 创建时间 */
-    createTime?: string
-    deptId?: string
+    createTime?: string;
+    deptId?: string;
     /** 邮箱 */
-    email?: string
+    email?: string;
     /** 好友id */
-    friendsIds?: string
+    friendsIds?: string;
     /** 性别 */
-    gender?: number
+    gender?: number;
     /** 用户id */
-    id?: string
+    id?: string;
     /** 是否删除 设置逻辑删除 */
-    isDelete?: number
+    isDelete?: number;
     /** 密码 */
-    password?: string
+    password?: string;
     /** 电话 */
-    phone?: string
+    phone?: string;
     /** 用户个人简历 */
-    profile?: string
+    profile?: string;
     /** 状态 0-正常 */
-    status?: number
-    tags?: string
+    status?: number;
+    tags?: string;
     /** 更新时间 */
-    updateTime?: string
+    updateTime?: string;
     /** 账号 */
-    useraccount?: string
+    useraccount?: string;
     /** 用户昵称 */
-    username?: string
-  }
+    username?: string;
+  };
 
   type UserDTO = {
-    pageNum?: number
-    pageSize?: number
-    searchText?: string
-  }
+    pageNum?: number;
+    pageSize?: number;
+    searchText?: string;
+  };
+
+  type UserLocationRequest = {
+    ad_info?: AdInfo;
+    ip?: string;
+    location?: Location;
+  };
+
+  type UserLocationVO = {
+    distance?: number;
+    latitude?: number;
+    longitude?: number;
+    user?: User;
+  };
 
   type UserUpdateRequest = {
     /** 邮箱 */
-    email?: string
+    email?: string;
     /** 性别 */
-    gender?: number
+    gender?: number;
     /** 用户id */
-    id?: string
+    id?: string;
     /** 电话 */
-    phone?: string
+    phone?: string;
     /** 用户个人简历 */
-    profile?: string
-    tags?: string
+    profile?: string;
+    tags?: string;
     /** 用户昵称 */
-    username?: string
-  }
+    username?: string;
+  };
 
   type UserVO = {
-    avatarUrl?: string
-    createTime?: string
-    email?: string
-    gender?: number
-    id?: string
+    avatarUrl?: string;
+    createTime?: string;
+    email?: string;
+    gender?: number;
+    id?: string;
     /** 是否关注 */
-    isFollow?: boolean
+    isFollow?: boolean;
     /** 是否关注 */
-    isFriend?: boolean
-    phone?: string
-    profile?: string
-    status?: number
-    tags?: string
-    updateTime?: string
-    useraccount?: string
-    username?: string
-  }
+    isFriend?: boolean;
+    phone?: string;
+    profile?: string;
+    status?: number;
+    tags?: string;
+    updateTime?: string;
+    useraccount?: string;
+    username?: string;
+  };
 
   type WebSocketVO = {
     /** 用户头像 */
-    avatarUrl?: string
+    avatarUrl?: string;
     /** id */
-    id?: string
+    id?: string;
     /** 用户账号 */
-    useraccount?: string
+    useraccount?: string;
     /** 用户昵称 */
-    username?: string
-  }
+    username?: string;
+  };
 }

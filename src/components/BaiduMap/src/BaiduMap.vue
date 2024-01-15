@@ -2,6 +2,7 @@
   <div style="display: flex">
     <div>
       <div>
+        <!--        todo 自动输入的内容没有改变-->
         <el-select
             v-model="keywords"
             filterable
@@ -32,10 +33,35 @@
       <div id="container" class="container"></div>
     </div>
     <div class="info-box">
-      纬度：{{ form.lat }}
-      <br/>
-      经度：{{ form.lng }}
-      <p>详细地址：{{ form.address }}</p>
+      <el-card>
+        <div slot="header" class="clearfix">
+          <span>你的位置信息</span>
+        </div>
+
+        <el-form :model="form" label-position="right" label-width="100px">
+          <el-form-item label="IPv6地址">
+            <el-input v-model="form.ip" disabled :autosize="{ minRows: 2, maxRows: 4}" type="textarea"></el-input>
+          </el-form-item>
+          <el-form-item label="经度">
+            <el-input v-model="form.lng" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="纬度">
+            <el-input v-model="form.lat" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="地区编码">
+            <el-input v-model="form.adcode" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="地址">
+            <el-input v-model="form.address" disabled :autosize="{ minRows: 2, maxRows: 4}" type="textarea">
+              <template #prefix>
+                <el-icon class="el-input__icon">
+                  <Position/>
+                </el-icon>
+              </template>
+            </el-input>
+          </el-form-item>
+        </el-form>
+      </el-card>
     </div>
   </div>
 </template>
@@ -45,6 +71,8 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 import {service} from "@/config/axios";
 import axios from "axios";
 import {jsonp} from "vue-jsonp";
+import {saveLocationUsingPost} from "@/servers/api/userLocationController";
+import {Calendar, Position} from "@element-plus/icons-vue";
 
 window._AMapSecurityConfig = {
   // 安全密钥
@@ -52,6 +80,12 @@ window._AMapSecurityConfig = {
 };
 export default {
   name: "TestIndex",
+  components: {Position},
+  computed: {
+    Calendar() {
+      return Calendar
+    }
+  },
   data() {
     return {
       // 地图实例
@@ -66,6 +100,7 @@ export default {
       keywords: "",
       // 位置信息
       form: {
+        ip: "",
         lng: "",
         lat: "",
         address: "",
@@ -123,27 +158,27 @@ export default {
             // 错误
             console.log(err);
           });
+
+      this.test();
+
     },
     // 标记点
     setMapMarker() {
       // 自动适应显示想显示的范围区域
-      this.map.setFitView();
+      // this.map.setFitView();
       this.marker = new AMap.Marker({
         // icon:"https://wuxie-image.oss-cn-chengdu.aliyuncs.com/logo.png",
         map: this.map,
         position: [this.form.lng, this.form.lat],
         // offset: new AMap.Pixel(-13, -30)
       });
-      const newMark = new AMap.Marker({
-        // icon:"https://wuxie-image.oss-cn-chengdu.aliyuncs.com/logo.png",
-        map: this.map,
-        position: [31.198045, 107.452874],
-        // offset: new AMap.Pixel(-13, -30)
-      });
+
       // 逆解析地址
       this.toGeoCoder();
-      this.map.setFitView();
       this.map.add(this.marker);
+      this.map.setFitView(this.marker);
+
+      console.log('123')
       // todo 准备一张表 记录用户的位置，然后进行添加
       // 显示离用户最近的
       // this.map.add(newMark);
@@ -196,29 +231,49 @@ export default {
       this.setMapMarker();
     },
 
-    currentLocate() {
-      axios({
-        url: "http://localhost:3000/ws/location/v1/ip", //接口地址（代理把起码路径去掉）
-        method: "get", //接口规定，只能用get
-        async: true, //异步
-        params: {key: "WHLBZ-F7DCZ-45NXX-774ZJ-LJTZT-JQBSV", output: "jsonp"}, //参数格式必须用到output传参为jsonp，否则会报跨域问题
-        responseType: "jsonp", //跨域，必须用到jsonp
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,POST',
-        }
-      }).then((res) => {
-        var ip = res.data.replace("QQmap&&QQmap(", "").replace(");", "");
-        this.ipV = JSON.parse(ip);
-        console.log(this.ipV)
-        //   this.initMap();
-      });
+    // currentLocate() {
+    //   axios({
+    //     // url: "http://localhost:3000/ws/location/v1/ip", //接口地址（代理把起码路径去掉）
+    //     method: "get", //接口规定，只能用get
+    //     async: true, //异步
+    //     params: {key: "I3BBZ-A5RCZ-TOYXJ-ZQBKC-UKBHV-TXB7F", output: "jsonp"}, //参数格式必须用到output传参为jsonp，否则会报跨域问题
+    //     responseType: "jsonp", //跨域，必须用到jsonp
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //       'Access-Control-Allow-Methods': 'GET,POST',
+    //     }
+    //   }).then((res) => {
+    //     console.log(res.result.location)
+    //     var ip = res.data.replace("QQmap&&QQmap(", "").replace(");", "");
+    //     this.ipV = JSON.parse(ip);
+    //     console.log(this.ipV)
+    //     //   this.initMap();
+    //   });
+    //
+    // }
+
+    test() {
+      fetch('/demo.json')
+          .then(response => response.json())
+          .then(res => {
+            const {result} = res;
+
+            console.log(result);
+            this.form.ip = result.ip;
+            this.form.lng = result.location.lng;
+            this.form.lat = result.location.lat;
+            this.form.adcode = result.ad_info.adcode;
+
+// Use template literals for cleaner string concatenation
+            this.form.address = `${result.ad_info.nation}${result.ad_info.province}${result.ad_info.city}${result.ad_info.district}`;
+            // 需要重新刷新一次
+            this.setMapMarker()
+          })
 
     }
   },
   mounted() {
     this.initMap();
-    this.currentLocate();
   },
 };
 </script>

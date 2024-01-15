@@ -40,6 +40,11 @@
             >{{ moment(currentUser.createTime).format('lll') }}
             </el-descriptions-item
             >
+
+            <el-descriptions-item align="left" label="钱包余额:" label-align="right"
+            > <el-tag class="ml-2" type="warning">$ money </el-tag>
+            </el-descriptions-item
+            >
           </el-descriptions>
         </el-card>
       </div>

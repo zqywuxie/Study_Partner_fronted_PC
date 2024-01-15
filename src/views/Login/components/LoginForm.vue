@@ -147,6 +147,7 @@ const signIn = async () => {
       // console.log(res)
       if (res) {
         const {wsCache} = useCache()
+        // todo 登录的使用定位api存入全局状态中
         wsCache.set(appStore.getUserInfo, res.data)
         // getRole()
         location.replace("/")
