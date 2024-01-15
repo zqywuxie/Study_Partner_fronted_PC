@@ -155,6 +155,7 @@ async function searchBlogPage() {
 //监听页数变化
 watch(pageNum, (newVal, oldVal) => {
   searchBlogPage()
+  console.log()
 })
 
 //搜索用户
